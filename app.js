@@ -1,4 +1,5 @@
-require('./lib');
+require('../lib');
+require('./db');
 var express = require('express');
 var app = module.exports = express.createServer(express.staticProvider(__dirname + '/public'), express.bodyDecoder(), express.cookieDecoder(), express.session());
 

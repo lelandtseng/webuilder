@@ -1,45 +1,47 @@
 
-			body{
-			 margin:0;
-			 padding:0;
-			}
-			#toolbar{
-			 height:200px;
-			}
-			#page{
+body {
+    margin: 0;
+    padding: 0;
+}
 
-			}
-			.theme{
-			 width:120px;
-			 height:120px;
-			 margin:10px;
-			 float:left;
-			}
+#toolbar {
+    height: 200px;
+}
 
-			#header{
-				border:1px solid red;
-				height:150px;
-				position: relative;
-			}
+#page {
+}
 
-			#logo{
-				position:absolute;
-				width:60px;
-				height:160px;
-				border:1px solid blue;
-				top:10px;
-				left:10px;
-			}
-			
-			#nav{
-				position:absolute;
-				border:1px solid #333333;
-				top:200px;
-				left:10px;
-			}
+.theme {
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+    float: left;
+}
 
-			#container{
-				width:1000px;
-				margin: auto;
-			}
-			
+#header {
+    border: 1px solid red;
+    height: 150px;
+    position: relative;
+}
+
+#logo {
+    position: absolute;
+    width: 60px;
+    height: 160px;
+    border: 1px solid blue;
+    top: 10px;
+    left: 10px;
+}
+
+#nav {
+    position: absolute;
+    border: 1px solid #333333;
+    top: 200px;
+    left: 10px;
+}
+
+#container {
+    width: 1000px;
+    margin: auto;
+}
+

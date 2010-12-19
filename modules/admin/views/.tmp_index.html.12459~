@@ -34,4 +34,3 @@
         </td>
     </tr><% } %>
 </table>
-<a href="/admin/open_add_page">添加用户</a>
