@@ -1,0 +1,36 @@
+<table border="1">
+    <tr>
+        <th>
+            登录名称
+        </th>
+        <th>
+            登录密码
+        </th>
+        <th>
+            域名
+        </th>
+        <th>
+            可用性
+        </th>
+    </tr>
+    <% for(var k in users){ %>
+    <tr>
+        <td>
+            <%= users[k].loginname %>
+        </td>
+        <td>
+            <%= users[k].password %>
+        </td>
+        <td>
+            <%= users[k].domain %>
+        </td>
+        <td>
+            <%= users[k].enable %>
+        </td>
+        <td>
+            <form action='/admin/open_update_page'>
+                <input type='hidden' value='<%= users[k].id %>' name='id' /><input type='submit' value='更新' />
+            </form>
+        </td>
+    </tr><% } %>
+</table><a href='/admin'>iddd</a>
