@@ -9,7 +9,7 @@ app.register('.html', require('ejs'));
 
 app.use('/product', require('./modules/product'));
 app.use('/admin', require('./modules/admin'));
-
+app.use('/login', require('./modules/login'));
 app.get('/book', function(req, res){
     console.log(req.errmsg);
     res.send("ok!");
