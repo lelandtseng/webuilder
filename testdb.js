@@ -1,5 +1,10 @@
 require('../lib');
+<<<<<<< HEAD
 var Db = require('mongodb').Db, Connection = require('mongodb').Connection, Server = require('mongodb').Server, BSON = require('mongodb').BSONNative;
+=======
+
+var Db = require('mongodb').Db, Connection = require('mongodb').Connection, Server = require('mongodb').Server, BSON = require('mongodb').BSONPure;
+>>>>>>> 8aa172bd5ab390b1be5d0a486c7a54b6fca84ac7
 
 var host = process.env['MONGO_NODE_DRIVER_HOST'] != null ? process.env['MONGO_NODE_DRIVER_HOST'] : '127.0.0.1';
 var port = process.env['MONGO_NODE_DRIVER_PORT'] != null ? process.env['MONGO_NODE_DRIVER_PORT'] : Connection.DEFAULT_PORT;
@@ -7,6 +12,7 @@ var port = process.env['MONGO_NODE_DRIVER_PORT'] != null ? process.env['MONGO_NO
 db = exports.DB = new Db('mydb', new Server(host, port, {}), {
     native_parser: false
 });
+<<<<<<< HEAD
 
 var product = {
     name: 'myname',
@@ -34,6 +40,29 @@ db.open(function(err, db){
         });
         */
         
+=======
+var ObjectID = BSON.ObjectID;
+db.open(function(err, db){
+    console.log("aaa");
+    db.collection('users', function(err, con){
+    
+        con.insert({
+            name: 'myname'
+        }, function(err){
+            con.remove({
+                _id: new ObjectID("4d0e235b1bb275380b000001")
+            }, function(err){
+                con.find({}, function(err, users){
+                    users.toArray(function(err, users){
+                        console.log(users);
+                    });
+                    
+                });
+                
+                
+            });
+        });
+>>>>>>> 8aa172bd5ab390b1be5d0a486c7a54b6fca84ac7
     });
 });
 

@@ -4,7 +4,7 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
 
-app.get('/open_login_page', function(req, res){
+app.get('/open_login_pa ge', function(req, res){
     res.render('login.html');
 });
 
