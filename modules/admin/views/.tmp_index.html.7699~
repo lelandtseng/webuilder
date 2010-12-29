@@ -12,9 +12,6 @@
         <th>
             可用性
         </th>
-        <th>
-            可用日期
-        </th>
     </tr>
     <% for(var k in users){ %>
     <tr>
@@ -31,12 +28,10 @@
             <%= users[k].enable %>
         </td>
         <td>
-            <%= users[k].date %>
-        </td>
-        <td>
             <form action='/admin/open_update_page'>
                 <input type='hidden' value='<%= users[k].id %>' name='id' /><input type='submit' value='更新' />
             </form>
         </td>
     </tr><% } %>
-</table><a href="/admin/open_add_page">添加用户</a>
+</table>
+<a href="/admin/open_add_page">添加用户</a>

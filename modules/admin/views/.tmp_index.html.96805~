@@ -22,16 +22,16 @@
             <%= users[k].loginname %>
         </td>
         <td>
-            <%= users[k].password %>
+            <%= users[k].loginname %>
         </td>
         <td>
-            <%= users[k].domain %>
+            <%= users[k].loginname %>
         </td>
         <td>
-            <%= users[k].enable %>
+            <%= users[k].loginname %>
         </td>
         <td>
-            <%= users[k].date %>
+            <%= users[k].loginname %>
         </td>
         <td>
             <form action='/admin/open_update_page'>

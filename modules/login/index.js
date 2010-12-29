@@ -8,16 +8,30 @@ app.get('/open_login_page', function(req, res){
     res.render('login.html');
 });
 
+// 登录
 app.post('/', function(req, res){
 
     var loginname = req.body['loginname'];
     var password = req.body['password'];
-    if (loginname && password && loginname == 'admin' && password == 'jialu1024') {
-        req.session.user = 1;
-        res.redirect('/');
-    }
-    else {
-        res.render('login.html');
-    }
+    
+    db.collection('users', function(err, con){
+        con.find({
+            'loginname': loginname
+        }, function(err, users){
+            users.toArray(function(err, users){
+                if (users.length == 0) 
+                    res.redirect('/login/open_login_page');
+                else {
+                    if (users[0].password == password) {
+                        req.session.user = users[0];
+                        res.send(" login success ! ");
+                    }
+                    else {
+                        res.redirect('/login/open_login_page');
+                    }
+                }
+            });
+        });
+    });
 });
 
