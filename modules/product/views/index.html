@@ -1,5 +1,7 @@
 <ul>
-	<% for(var o in product_type_list){ %>
-		<li><%= product_type_list[o].name %></li>
+	<% for(var o in zxproducts){ %>
+		<li><%= zxproducts[o].name %> <a href="/product/<%= zxproducts[o]._id %>/edit">更新</a>  <a href="/product/<%= zxproducts[o]._id %>/delete">删除</a></li>
 	<% } %>
 </ul>
+
+<a href='/product/open_add_page' >添加</a>

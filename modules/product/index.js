@@ -4,13 +4,13 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
 var ObjectID = require('mongodb').BSONPure.ObjectID;
-
-//得到最新产品
+var data = require('express-data');
+/**得到最新产品*/
 function zxcp(req, res, next){
     db.collection("products", function(err, con){
         con.find({}, {
-            limit: 10,
-            sort: [['createTime',-1]]
+            limit: 50,
+            sort: [['_id', -1]]
         }, function(err, products){
             products.toArray(function(err, products){
                 req.zxproducts = products;
@@ -33,6 +33,17 @@ function tjcp(req, res, next){
                 req.tjproducts = products;
                 next();
             });
+        });
+    });
+}
+
+// 删除产品
+function del(req, res, next){
+    db.collection('products', function(err, con){
+        con.remove({
+            _id: new ObjectID(req.params.id)
+        }, function(err, type){
+            next();
         });
     });
 }
@@ -109,7 +120,19 @@ function deltype(req, res, next){
     });
 }
 
-
+// 得到指定ID的产品
+function product(req, res, next){
+    db.collection("products", function(err, con){
+        con.find({
+            _id: new ObjectID(req.params.id)
+        }, function(err, products){
+            products.toArray(function(err, products){
+                req.product = products[0];
+                next();
+            });
+        });
+    });
+}
 
 
 
@@ -146,44 +169,48 @@ app.get('/type/:id/update', function(req, res){
 });
 
 // 产品首页
-app.get('/', zxcp, tjcp, cplist, producttypes, function(req, res){
+app.get('/', zxcp, function(req, res){
     res.render('index.html', {
-        tjproducts: req.tjproducts,
-        zxproducts: req.zxproducts,
-        listproducts: req.listproducts,
-        producttypes: req.producttypes
+        zxproducts: req.zxproducts
     });
+});
+
+// 打开添加产品的页面
+app.get('/open_add_page', function(req, res){
+    res.render('add.html');
 });
 
 // 添加产品
 app.post('/add', function(req, res){
     db.collection('products', function(err, con){
-        con.insert(req.data, function(err){
-            res.redirect('/products/list/1')
+        con.insert(req.body, function(err){
+            res.redirect('/product')
         });
     });
 });
 
+//打开更新页面
+app.get("/:id/edit", product, function(req, res){
+    res.render('edit.html', {
+        product: req.product
+    });
+});
+
 // 更新产品
-app.post("/:id/update", function(req, res){
+app.post("/:id/update", data(), function(req, res){
     db.collection('products', function(err, con){
         con.update({
-            '_id': req.params.id
-        }, req, data, function(err){
-            res.redirect('/products/list/1')
+            '_id': new ObjectID(req.params.id)
+        }, req.data, function(err){
+            console.log(req.params.id);
+            res.redirect('/product')
         });
     });
 })
 
 // 删除产品
-app.get('/:id/delete', function(req, res){
-    db.collection('products', function(err, con){
-        con.remove({
-            '_id': req.params.id
-        }, function(err){
-            res.redirect('/products/list/1')
-        });
-    });
+app.get('/:id/delete', del, function(req, res){
+    res.redirect('/product')
 });
 
 // 得到一个产品
@@ -198,6 +225,10 @@ app.get("/:id", function(req, res){
         });
     });
 });
+
+//打开产品更新页面
+
+
 
 // 得到最新产品
 app.get("/new", function(req, res){
