@@ -1,9 +1,7 @@
+<% for(var k in errmsg) %>
+	<font color='red'><%= k %>:<%= errmsg[k] %></font><br/>
+<% } %>
 
-<% if(typeof errmsg != 'undefined'){  %>
-<% for(var k in errmsg) { %>
-	<font color='red'><%= errmsg[k] %></font><br/>
-<% } %>
-<% } %>
 <form method='post' action='/product/add'>
     <input type='text' name='name' />
     <br/>

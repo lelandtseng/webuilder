@@ -5,6 +5,14 @@ app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
 var ObjectID = require('mongodb').BSONPure.ObjectID;
 var data = require('express-data');
+var V = require('connect-validator');
+var va = V.create();
+va.validatField('name', 'len', {
+    min: 2,
+    max: 4
+}, "应该在2~4字符之间!");
+
+
 /**得到最新产品*/
 function zxcp(req, res, next){
     db.collection("products", function(err, con){
@@ -181,12 +189,19 @@ app.get('/open_add_page', function(req, res){
 });
 
 // 添加产品
-app.post('/add', function(req, res){
-    db.collection('products', function(err, con){
-        con.insert(req.body, function(err){
-            res.redirect('/product')
+app.post('/add', V.validat(va), function(req, res){
+	console.log(req.errmsg);
+    if (req.errmsg) {
+    	res.render('add.html',{errmsg:req.errmsg});
+    }
+    else {
+        db.collection('products', function(err, con){
+            con.insert(req.data, function(err){
+                res.redirect('/product')
+            });
         });
-    });
+    }
+    
 });
 
 //打开更新页面
