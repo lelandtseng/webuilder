@@ -25,9 +25,3 @@
     <input id='product_img' type='file' name='img' />
 		<input type='submit' />
 </form>
-
-<style>
-	label,input,textarea{
-		display:block ;
-	}
-</style>

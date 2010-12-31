@@ -6,11 +6,25 @@ app.register('.html', require('ejs'));
 var ObjectID = require('mongodb').BSONPure.ObjectID;
 var data = require('express-data');
 var V = require('connect-validator');
+
 var va = V.create();
 va.validatField('name', 'len', {
     min: 2,
     max: 4
 }, "应该在2~4字符之间!");
+
+va.validatField('price', 'isDecimal', {}, "价格应该是0.0的格式");
+va.validatField('des', 'len', {
+    min: 5,
+    max: 20
+}, "描述文字应该是 5 ~ 20 字符之间。");
+va.validatField('img', function(value, params){
+		console.log(value);
+    if (value.length > 200) 
+        return false;
+    else 
+        return true;
+}, {}, "产品图片应该小于200byte");
 
 
 /**得到最新产品*/
@@ -250,9 +264,6 @@ app.get("/:id", function(req, res){
         });
     });
 });
-
-//打开产品更新页面
-
 
 
 // 得到最新产品
