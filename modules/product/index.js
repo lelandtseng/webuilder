@@ -190,9 +190,11 @@ app.get('/open_add_page', function(req, res){
 
 // 添加产品
 app.post('/add', V.validat(va), function(req, res){
-	console.log(req.errmsg);
+    console.log(req.errmsg);
     if (req.errmsg) {
-    	res.render('add.html',{errmsg:req.errmsg});
+        res.render('add.html', {
+            errmsg: req.errmsg
+        });
     }
     else {
         db.collection('products', function(err, con){
@@ -212,15 +214,23 @@ app.get("/:id/edit", product, function(req, res){
 });
 
 // 更新产品
-app.post("/:id/update", data(), function(req, res){
-    db.collection('products', function(err, con){
-        con.update({
-            '_id': new ObjectID(req.params.id)
-        }, req.data, function(err){
-            console.log(req.params.id);
-            res.redirect('/product')
+app.post("/:id/update", V.validat(va), product, function(req, res){
+    if (req.errmsg) {
+        res.render('edit.html', {
+            errmsg: req.errmsg,
+            product: req.product
         });
-    });
+    }
+    else {
+        db.collection('products', function(err, con){
+            con.update({
+                '_id': new ObjectID(req.params.id)
+            }, req.data, function(err){
+                console.log(req.params.id);
+                res.redirect('/product')
+            });
+        });
+    }
 })
 
 // 删除产品
