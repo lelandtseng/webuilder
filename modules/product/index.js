@@ -7,52 +7,21 @@ var Model = require('../../model').Model;
 
 var Product = new Model('products');
 
-
 var data = require('express-data');
-var V = require('connect-validator');
 
-var va = V.create();
-va.validatField('name', 'len', {
-    min: 2,
-    max: 4
-}, "应该在2~4字符之间!");
-
-va.validatField('price', 'isDecimal', {}, "价格应该是0.0的格式");
-va.validatField('des', 'len', {
-    min: 5,
-    max: 20
-}, "描述文字应该是 5 ~ 20 字符之间。");
-va.validatField('img', function(value, params){
-    console.log(value);
-    if (value.length > 200) 
-        return false;
-    else 
-        return true;
-}, {}, "产品图片应该小于200byte");
-
-
-// 添加产品类别
-app.post('/type/add', function(req, res){
-    db.collection('producttypes', function(err, con){
-        con.insert(req.data, function(err){
-            res.redirect('/products/type/list')
-        });
-    });
-});
-
-
-
-
-// 更新产品类别
-app.get('/type/:id/update', function(req, res){
-    res.render('update_type.html', {
-        producttype: req.producttype
-    });
-});
+// 添加产品表单验证
+var productValidator = require('./validator').productValidator;
 
 // 产品首页
-app.get('/', function(req, res){
-    Product.find({}, {}, function(data){
+app.get('/page/:num', function(req, res){
+    var page = parseInt(req.params.num) - 1;
+    
+    Product.find({}, {
+        sort: [['_id', -1]],
+        limit: 5,
+        skip: page * 5
+    }, function(data,num){
+			console.log("num ===========> "+num);
         res.render('index.html', {
             zxproducts: data
         });
@@ -60,28 +29,29 @@ app.get('/', function(req, res){
 });
 
 // 打开添加产品的页面
-app.get('/open_add_page', function(req, res){
+app.get('/add', function(req, res){
     res.render('add.html');
 });
 
 // 添加产品
-app.post('/add', V.validat(va), function(req, res){
-    console.log(req.errmsg);
+app.post('/save', productValidator, function(req, res){
+
     if (req.errmsg) {
         res.render('add.html', {
-            errmsg: req.errmsg
+            errmsg: req.errmsg,
+            flash: req.data
         });
     }
     else {
         Product.save(req.data, function(){
-            res.redirect('/product')
+            res.redirect('/product/page/1')
         });
     }
     
 });
 
 //打开更新页面
-app.get("/:id/edit", function(req, res){
+app.get("/edit/:id", function(req, res){
     Product.get(req.params.id, function(data){
         res.render('edit.html', {
             product: data
@@ -90,7 +60,7 @@ app.get("/:id/edit", function(req, res){
 });
 
 // 更新产品
-app.post("/:id/update", V.validat(va), function(req, res){
+app.post("/update/:id", productValidator, function(req, res){
     if (req.errmsg) {
         Product.get(req.params.id, function(data){
             res.render('edit.html', {
@@ -101,17 +71,15 @@ app.post("/:id/update", V.validat(va), function(req, res){
     }
     else {
         Product.update(req.params.id, req.data, function(){
-            res.redirect('/product')
+            res.redirect('/product/page/1')
         });
     }
 })
 
 // 删除产品
-app.get('/:id/delete', function(req, res){
-
+app.get('/delete/:id', function(req, res){
     Product.remove(req.params.id, function(){
-        res.redirect('/product')
+        res.redirect('back')
     });
-    
 });
 

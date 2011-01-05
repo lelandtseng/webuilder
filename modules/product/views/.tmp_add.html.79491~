@@ -6,23 +6,20 @@
 <br/>
 <% } %>
 <% } %>
-
-<% if(typeof flash == 'undefined' ){ %>
-  <% var flash = {}; %>
-<% }%>
 <form method='post' enctype="multipart/form-data" action='/product/save'>
     <label for='product_name'>
         产品名称
     </label>
-    <input id='product_name' type='text' name='name' value='<%= flash.name ? flash.name : "" %>' />
+    <input id='product_name' type='text' name='name' />
     <label for='product_price'>
         产品价格
     </label>
-    <input id='product_price' type='text' name='price' value='<%= flash.price ? flash.price : "" %>' />
+    <input id='product_price' type='text' name='price' />
     <label for='product_des'>
         产品描述
     </label>
-    <textarea id='product_des' name='des'><%= flash.des ? flash.des : "" %></textarea>
+    <textarea id='product_des' name='des'>
+    </textarea>
     <label for='product_img'>
         产品图片
     </label>

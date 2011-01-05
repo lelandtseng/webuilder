@@ -4,7 +4,7 @@
 <% } %>
 <% } %>
 <br>edit page:<br>
-<form method='post' action='/product/update/<%= product._id %>'>
+<form method='post' action='/product/<%= product._id %>/update'>
     <input type='text' name='name' value="<%= product.name %>" />
     <br/>
     <input type='submit' />
