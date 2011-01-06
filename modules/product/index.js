@@ -7,7 +7,7 @@ var Model = require('../../model').Model;
 
 var Product = new Model('products');
 
-var data = require('express-data');
+
 
 // 添加产品表单验证
 var productValidator = require('./validator').productValidator;

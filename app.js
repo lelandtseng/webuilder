@@ -1,4 +1,4 @@
-require('../lib');
+
 var express = require('express');
 var app = module.exports = express.createServer(require('connect-form')() , express.staticProvider(__dirname + '/public'), express.bodyDecoder(), express.cookieDecoder(), express.session());
 
