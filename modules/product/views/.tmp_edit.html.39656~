@@ -1,5 +1,0 @@
-<form method='post' action='/product/<%= product._id %>/update'>
-    <input type='text' name='name' value="<%= product.name %>" />
-    <br/>
-    <input type='submit' />
-</form>

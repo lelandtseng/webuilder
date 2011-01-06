@@ -1,4 +1,0 @@
-<form action='/admin/add' method='post'>
-	<input name='loginname' type='text' />
-	<input type=submit />
-</form>

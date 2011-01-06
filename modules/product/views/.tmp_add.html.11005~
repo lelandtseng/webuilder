@@ -1,9 +1,0 @@
-<% for(var k in errmsg) %>
-	<font color='red'><%= k %>:<%= errmsg[k] %></font><br/>
-<% } %>
-
-<form method='post' action='/product/add'>
-    <input type='text' name='name' />
-    <br/>
-    <input type='submit' />
-</form>

@@ -1,5 +1,0 @@
-<form method='post' action='/login'>
-	<input type='text' name='loginname'/><br>
-	<input type=='password' name='password' /><br>
-	<input type='submit' value='login'/>
-</form>
