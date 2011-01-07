@@ -1,9 +1,11 @@
-<form action='/admin/add' method='post'>
-    <input name='loginname' type='text' />
+<form action='/admin/save' method='post'>
+    登录名 <input name='loginname' type='text' />
     <br/>
-    <input name='password' type='text' />
+    登录密码 <input name='password' type='text' />
     <br/>
-    <input name='domain' type='text' />
+    域名 <input name='domain' type='text' />
+    <br/>
+    验证码 <%= a %> + <%= b %><input name='<%= vname %>' type='text' />
     <br/>
     <select name='enable'>
         <br/>

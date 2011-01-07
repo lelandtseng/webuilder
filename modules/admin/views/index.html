@@ -34,8 +34,10 @@
             <%= users[k].date %>
         </td>
         <td>
-            <a href="/admin/edit/<%= users[k]._id %>">更新</a>
 
+            <a href="/admin/edit/<%= users[k]._id %>">更新</a>
+            <a href='/admin/edit/<%= users[k]._id %>'>编辑</a> 
+            <a href='/admin/delete/<%= users[k]._id %>'>删除</a> 
         </td>
     </tr><% } %>
-</table><a href="/admin/open_add_page">添加用户</a>
+</table><a href="/admin/add">添加用户</a>

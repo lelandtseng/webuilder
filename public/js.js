@@ -1,14 +1,17 @@
 			$(function(){
 			
 				
+				
+				
 				$('#show-logindialog-button').click(function(){
-					$('#login-dialog').dialog();
+                    $.get('/login',function(data){
+                    
+                       $('#dialog').html(data);
+                       $('#dialog').dialog();                       
+                    });
+					
 				});
 
-
-				$('#show-regdialog-button').click(function(){
-					$('#reg-dialog').dialog();
-				});
 				$('#toolbar').tabs({
 					ajaxOptions:{
 						
