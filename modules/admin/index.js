@@ -9,8 +9,8 @@ var User = new Model('users');
 var Model = require('model').Model;
 var User = new Model('users');
 
-var createVN = require('./validnum').createVN;
-var validatVN = require('./validnum').validatVN;
+var createVN = require('validnum').createVN;
+var validatVN = require('validnum').validatVN;
 
 // 验证是否有adm
 function yz(req, res, next){
