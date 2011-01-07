@@ -33,16 +33,11 @@ app.get('/add', yz,createVN, function(req, res){
     });
 });
 
-// 添加功能
-app.post('/add', yz, function(req, res){
-    User.save(req.body,function(){
-        res.redirect('/admin');
-    })
-});
+
 
 
 // 显示主页
-app.get('/', yz, function(req, res){
+app.get('/', createVN , yz,  function(req, res){
 
     User.find({},{},function(data){
         res.render('index.html', {
@@ -71,16 +66,6 @@ app.get('/',createVN ,  yz, function(req, res){
     });
 });
 
-// 编辑用户
-app.get('/edit/:id', yz , createVN , function(req, res){
-    User.get(req.params.id,function(data){
-        res.render('update.html',{updateuser:data});
-    });
-
-  
-});
-
-
 // 编辑ID指定User
 app.get('/edit/:id',yz, function(req, res){
     
@@ -99,7 +84,7 @@ app.post('/update/:id',yz, createVN ,function(req,res){
 });
 
 // 删除用户
-app.get('/delete/:id', yz ,createVN , function(req, res){
+app.get('/delete/:id', yz ,function(req, res){
     User.remove(req.params.id,function(){
          res.redirect('/admin')
     });
