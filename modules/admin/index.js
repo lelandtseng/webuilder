@@ -4,81 +4,84 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
 
+var Model = require('model').Model;
+var User = new Model('users');
+
+var createVN = require('./validnum').createVN;
+var validatVN = require('./validnum').validatVN;
+
 // 验证是否有adm
 function yz(req, res, next){
     if (req.session && req.session.adm) {
         next();
     }
     else {
-        res.render('login.html')
+        res.render('login.html' ,{
+            vname:req.session.vnum.vname,
+            a:req.session.vnum.a,
+            b:req.session.vnum.b
+        })
     }
 }
 
 // 打开添加页面
-app.get('/open_add_page', yz, function(req, res){
-    res.render('add.html');
-});
-
-// 添加功能
-app.post('/add', yz, function(req, res){
-    db.createCollection('users', function(err, con){
-        con.insert(req.body, function(err){
-            res.redirect('/admin')
-        });
-    })
-});
-
-// 全部用户
-function alluser(req, res, next){
-    db.collection('users', function(err, con){
-        con.find({}, function(err, users){
-            console.log(users);
-            var userlist = [];
-            users.toArray(function(err, users){
-                req.users = users;
-                next();
-            });
-            
-        });
-    })
-}
-
-// 显示主页
-app.get('/', yz, alluser, function(req, res){
-    res.render('index.html', {
-        layout: 'layout2',
-        users: req.users
+app.get('/add', yz,createVN, function(req, res){
+    res.render('add.html',{
+        vname:req.session.vnum.vname,a:req.session.vnum.a,b:req.session.vnum.b
     });
 });
 
-app.get('/open_update_page', function(req, res){
-    if (req.session.adm) {
-        if (req.param('id') && users[req.param('id')]) {
-            res.render('update.html', {
-                updateuser: users[req.param('id')]
-            });
-        }
-        else {
-            res.redirect('/admin');
-        }
-    }
-    else {
-        res.render('login.html');
+// 添加功能
+app.post('/save', yz, validatVN , function(req, res){
+    if(req.vn){
+    req.body._id = req.body.loginname;
+      User.save(req.body,function(){
+        res.redirect('/admin')
+      });    
+    }else{
+        res.redirect('/admin/add');
     }
 });
 
+// 显示主页
+app.get('/',createVN ,  yz, function(req, res){
+    User.find({},{},function(data){
+        res.render('index.html', {
+            users: data
+        });
+    });
+});
 
-app.post('/login', function(req, res){
+// 编辑用户
+app.get('/edit/:id', yz , createVN , function(req, res){
+    User.get(req.params.id,function(data){
+        res.render('update.html',{updateuser:data});
+    });
+});
+
+// 更新用户信息
+app.post('/update/:id',yz, createVN ,function(req,res){
+    User.update(req.params.id,req.body,function(){
+       res.redirect('/admin')
+    });
+});
+
+// 删除用户
+app.get('/delete/:id', yz ,createVN , function(req, res){
+    User.remove(req.params.id,function(){
+         res.redirect('/admin')
+    });
+});
+
+app.post('/login', validatVN , function(req, res){
 
     var loginname = req.body['loginname'];
     var password = req.body['password'];
-    if (loginname && password && loginname == 'admin' && password == 'jialu1024') {
+    if (req.vn && loginname && password && loginname == 'admin' && password == 'jialu1024') {
         req.session.adm = 1;
-        res.redirect('/admin');
+   
     }
-    else {
-        res.render('login.html');
-    }
+    res.redirect('/admin');
 });
 
 

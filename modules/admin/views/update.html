@@ -1,8 +1,8 @@
-<form action='/admin/update' method='post'>
-<input type='hidden' value='<%= updateuser.id %>' name='id' />
-<input type='text' value='<%= updateuser.loginname %>' name='loginname' />
-<input type='text' value='<%= updateuser.password %>' name='password' />
-<input type='checkbox' value='<%= updateuser.enable %>' name='enable' />
-<input type='text' value='<%= updateuser.domain %>' name='domain' />
-<input type='submit' value'更改' />
+<form action='/admin/update/<%= updateuser._id %>' method='post'>
+    <input type='hidden' value='<%= updateuser.id %>' name='id' />
+    <input type='text' value='<%= updateuser.loginname %>' name='loginname' />
+    <input type='text' value='<%= updateuser.password %>' name='password' />
+    <input type='checkbox' value='<%= updateuser.enable %>' name='enable' />
+    <input type='text' value='<%= updateuser.domain %>' name='domain' />
+    <input type='submit' value'更改' />
 </form>

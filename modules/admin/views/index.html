@@ -34,9 +34,8 @@
             <%= users[k].date %>
         </td>
         <td>
-            <form action='/admin/open_update_page'>
-                <input type='hidden' value='<%= users[k].id %>' name='id' /><input type='submit' value='更新' />
-            </form>
+            <a href='/admin/edit/<%= users[k]._id %>'>编辑</a> 
+            <a href='/admin/delete/<%= users[k]._id %>'>删除</a> 
         </td>
     </tr><% } %>
-</table><a href="/admin/open_add_page">添加用户</a>
+</table><a href="/admin/add">添加用户</a>

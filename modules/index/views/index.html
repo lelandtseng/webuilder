@@ -1,13 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset='gb2312'>
+        <meta charset='utf-8'>
         <meta http-equiv="content-type" content="text/html; charset=gb2312">
         <script src='http://code.jquery.com/jquery-1.4.4.min.js'>
         </script>
-        <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js'>
+        <script src='/jquery.form.js'>
         </script>
-        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/base/jquery-ui.css" type="text/css" />
+
+        <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js'>
+        </script>      
+       
+        <link rel="stylesheet" 
+                href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/base/jquery-ui.css" 
+                type="text/css" /> 
+        <script src='/main.js'>
+        </script>
         <link rel="stylesheet" href="css.css" type="text/css" />
         <style>
             #toolbar {
@@ -17,11 +25,9 @@
         <script src='js.js'>
         </script>
     </head>
-    <body>
-        <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-            <input type="hidden" name="cmd" value="_s-xclick"><input type="hidden" name="hosted_button_id" value="BEGUN97AJYMR2"><input type="image" src="https://www.paypal.com/zh_XC/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal——最安全便捷的在线支付方式！"><img alt="" border="0" src="https://www.paypal.com/zh_XC/i/scr/pixel.gif" width="1" height="1">
-        </form>
-        <div id='toolbar'>
+    <body>  
+        <% if(user.loginname !== 'none' ){ %>     
+           <div id='toolbar'>
             <ul>
                 <li>
                     <a href='#_theme'>色调</a>
@@ -44,37 +50,37 @@
             </ul>
             <div id='_theme'>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/ui-lightness/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_ui_light.png' />
+                    <img src='/theme_90_ui_light.png' />
                 </div>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/ui-darkness/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_ui_dark.png'/>
+                    <img src='/theme_90_ui_dark.png'/>
                 </div>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/smoothness/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_smoothness.png'/>
+                    <img src='/theme_90_smoothness.png'/>
                 </div>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/start/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_start_menu.png' />
+                    <img src='/theme_90_start_menu.png' />
                 </div>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/redmond/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_windoze.png' />
+                    <img src='/theme_90_windoze.png' />
                 </div>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/sunny/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_sunny.png' />
+                    <img src='/theme_90_sunny.png' />
                 </div>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/overcast/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_overcast.png' />
+                    <img src='/theme_90_overcast.png' />
                 </div>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/le-frog/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_le_frog.png' />
+                    <img src='/theme_90_le_frog.png' />
                 </div>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/flick/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_flick.png' />
+                    <img src='/theme_90_flick.png' />
                 </div>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/pepper-grinder/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_pepper_grinder.png'/>
+                    <img src='/theme_90_pepper_grinder.png'/>
                 </div>
                 <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/le-frog/jquery-ui.css'>
-                    <img src='http://www.jqueryui.com/themeroller/images/themeGallery/theme_90_le-frog_menu.png' />
+                    <img src='/theme_90_le-frog_menu.png' />
                 </div>
                 <div style='clear:both'>
                 </div>
@@ -208,6 +214,7 @@
                 });
             })
         </script>
+        <% } %>
         <div id='page'>
             <div id='container'>
                 <div id='header'>
@@ -262,34 +269,9 @@
                         show toolbar button
                     </button>
                 </div>
-                <div id='login-dialog'>
-                    <form id='login-form' method='post' action='/login'>
-                        <label for='loginname'>
-                            Login Name:
-                        </label>
-                        <input name='loginname' type='text' />
-                        <label for='password'>
-                            Password:
-                        </label>
-                        <input name='password' type='password' /><input type='submit'/>
-                    </form>
+                <div id='dialog'>
                 </div>
-                <div id='reg-dialog'>
-                    <form id='reg-form' method='post' action='/reg'>
-                        <label for='loginname'>
-                            Login Name:
-                        </label>
-                        <input name='loginname' type='text' />
-                        <label for='password'>
-                            Password:
-                        </label>
-                        <input name='password' type='password' />
-                        <label for='confirm'>
-                            Confirm:
-                        </label>
-                        <input name='confirm' type='password' /><input type='submit'/>
-                    </form>
-                </div>
+               
                 <div style='clear:both'>
                 </div>
             </div>

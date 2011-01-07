@@ -1,5 +1,18 @@
-<form method='post' action='/login'>
-	<input type='text' name='loginname'/><br>
-	<input type=='password' name='password' /><br>
-	<input type='submit' value='login'/>
+<form method='post' id='loginform' action='/login/login'>
+    <label for='loginform_loginname'>登录名称</label>
+	<input id='loginform_loginname' type='text' name='loginname'/>
+    <label for='loginform_password'>登录密码</label>	
+	<input id='loginform_password' type='password' name='password' /><br>
+	<%= a%> + <%= b%> = <input type='text' name='<%= vname %>' /><br>
+	<input type='submit' id='loginbutton' value='login'/>
 </form>
+
+<script>
+    $('#loginbutton').click(function(){
+        $('#loginform').ajaxForm(function(data){          
+           $('#dialog').html(data);
+        });
+        
+        $('#loginform').form();
+    });
+</script>
