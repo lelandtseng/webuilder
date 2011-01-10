@@ -1,9 +1,6 @@
 			$(function(){
-			
-				
-				
-				
-				$('#show-logindialog-button').click(function(){
+		
+			    $('#show-logindialog-button').click(function(){
                     $.get('/login',function(data){
                     
                        $('#dialog').html(data);
@@ -53,5 +50,37 @@
 				}).disableSelection();
 				$('#nav').draggable({containment:'#page' });
 
+                function savestate(){
+                    // 色调
+                    var theme = $($('link')[0]).attr('href');
+                    // 布局
+                    var leftcss = $('#left').attr('style');	
+                    var cententcss = $('#centent').attr('style');	
+                    var rightcss = $('#right').attr('style');
+                    // 标题栏高度
+                    var headerlength = $('#header').css('height');
+                    //logo 高度
+                    var logosize = $('#logo').css('height');
+                    // 导航栏top
+                    var navtop = $('#nav').css('top');
+                    var navleft = $('#nav').css('left');
+                    // 保存模块
+                    var leftmodelnames = null;
+                    var centermodelnames = null;
+                    var rightmodelnames = null;                   
+                    
+                    
+                    
+                }
+                
+                
+                
+                
+                
+                
+                $('#show-toolbar-button').click(function(){
+                    savestate();
+                });
+                 
 
 			})

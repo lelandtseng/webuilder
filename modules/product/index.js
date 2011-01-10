@@ -7,23 +7,22 @@ var Model = require('model').Model;
 var ObjectID = require('model').ObjectID;
 var Product = new Model('products');
 
-
-
 // 添加产品表单验证
 var productValidator = require('./validator').productValidator;
 
 // 产品首页
 app.get('/page/:num', function(req, res){
-    var page = parseInt(req.params.num) - 1;
+    var page = parseInt(req.params.num);
     
     Product.find({}, {
         sort: [['_id', -1]],
-        limit: 5,
-        skip: page * 5
-    }, function(data,num){
-			console.log("num ===========> "+num);
-        res.render('index.html', {
-            zxproducts: data
+        pagenum: page,
+        rsnum: 5
+    }, function(data,pageinfo){   
+   
+         res.render('index.html', {
+            zxproducts: data,
+            pageinfo:pageinfo
         });
     });
 });
