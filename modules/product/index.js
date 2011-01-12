@@ -3,8 +3,8 @@ var app = module.exports = express.createServer();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
-var Model = require('model').Model;
-var ObjectID = require('model').ObjectID;
+var Model = require('mongo-model').Model;
+var ObjectID = require('mongo-model').ObjectID;
 var Product = new Model('products');
 
 // 添加产品表单验证

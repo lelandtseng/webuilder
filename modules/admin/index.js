@@ -1,4 +1,4 @@
-var Model = require('model').Model;
+var Model = require('mongo-model').Model;
 var express = require('express');
 var app = module.exports = express.createServer();
 app.set('views', __dirname + '/views');
@@ -6,7 +6,7 @@ app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
 var User = new Model('users');
 
-var Model = require('model').Model;
+
 var User = new Model('users');
 
 var createVN = require('validnum').createVN;
