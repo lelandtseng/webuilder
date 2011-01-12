@@ -1,7 +1,7 @@
 var express = require('express');
 var app = module.exports = express.createServer();
-var createVN = require('validnum').createVN;
-var validatVN = require('validnum').validatVN;
+var createVN = require('express-validatnum').createVN;
+var validatVN = require('express-validatnum').validatVN;
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
