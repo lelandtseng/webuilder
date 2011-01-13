@@ -49,6 +49,11 @@ app.post('/save', productValidator, function(req, res){
     
 });
 
+app.get("/downimg/:name",function(req,res){
+    var path = '/tmp/'+req.params.name;
+    res.sendfile(path);
+});
+
 //打开更新页面
 app.get("/edit/:id", function(req, res){
     Product.get(new ObjectID(req.params.id), function(data){

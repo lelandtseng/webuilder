@@ -1,6 +1,6 @@
 <ul>
 	<% for(var o in zxproducts){ %>
-		<li><%= zxproducts[o].name %> 
+		<li><%= zxproducts[o].name %> <img src="/product/downimg/<%=zxproducts[o].img.path%>" width='80' height='60'/>
 		    <a href="/product/edit/<%= zxproducts[o]._id %>">更新</a>  
 		    <a href="/product/delete/<%= zxproducts[o]._id %>">删除</a>
 		</li>

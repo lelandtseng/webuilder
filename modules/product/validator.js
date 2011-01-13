@@ -19,7 +19,7 @@ productValidator.validatField('des', 'len', {
 }, "描述文字应该是 5 ~ 50 字符之间。");
 productValidator.validatField('img', function(value, params){
     console.log(value);
-    if (value.length > 60000) 
+    if (value.length > 6000000) 
         return false;
     else 
         return true;
