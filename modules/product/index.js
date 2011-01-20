@@ -6,10 +6,8 @@ app.register('.html', require('ejs'));
 var Model = require('mongo-model').Model;
 var ObjectID = require('mongo-model').ObjectID;
 var Product = new Model('products');
-
-// 添加产品表单验证
-var productValidator = require('./validator').productValidator;
-
+var FormData = require("form-data");
+var form1 = new FormData();
 // 产品首页
 app.get('/page/:num', function(req, res){
     var page = parseInt(req.params.num);
@@ -33,19 +31,12 @@ app.get('/add', function(req, res){
 });
 
 // 添加产品
-app.post('/save', productValidator, function(req, res){
+app.post('/save',form1.build(), function(req, res){
 
-    if (req.errmsg) {
-        res.render('add.html', {
-            errmsg: req.errmsg,
-            flash: req.data
-        });
-    }
-    else {
-        Product.save(req.data, function(){
+        Product.save(req.formdata, function(){
+            //console.log(req.formdata);
             res.redirect('/product/page/1')
         });
-    }
     
 });
 
@@ -64,7 +55,7 @@ app.get("/edit/:id", function(req, res){
 });
 
 // 更新产品
-app.post("/update/:id", productValidator, function(req, res){
+app.post("/update/:id", function(req, res){
     if (req.errmsg) {
         Product.get(new ObjectID(req.params.id), function(data){
             res.render('edit.html', {
