@@ -1,6 +1,8 @@
+var contrib = require('../express-contrib/lib/express-contrib')
+  , Resource = contrib.Resource;
 
 var express = require('express');
-var app = module.exports = express.createServer(require('connect-form')() , express.staticProvider(__dirname + '/public'), express.bodyDecoder(), express.cookieDecoder(), express.session({ secret: 'keyboard cat' }),function(req,res,next){
+var app = module.exports = express.createServer(require('connect-form')() , express.staticProvider(__dirname + '/public'), express.bodyDecoder(), express.cookieDecoder(),express.methodOverride(), express.session({ secret: 'keyboard cat' }),function(req,res,next){
     (req.header("content-length") > 2 * 1024 * 1024) ? req.destroy() :  next();
 });
 
@@ -10,6 +12,7 @@ app.register('.html', require('ejs'));
 
 app.use('/product', require('./modules/product'));
 app.use('/', require('./modules/index'));
+app.resource('test', require('./test'));
 
 app.listen(3000);
 

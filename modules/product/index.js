@@ -3,10 +3,10 @@ var app = module.exports = express.createServer();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
-var Model = require('mongo-model').Model;
-var ObjectID = require('mongo-model').ObjectID;
+var Model = require('../../../mongo-model').Model;
+var ObjectID = require('../../../mongo-model').ObjectID;
 var Product = new Model('products');
-var FormData = require("form-data");
+var FormData = require("../../../form-data");
 var form1 = new FormData();
 // 产品首页
 app.get('/page/:num', function(req, res){
@@ -41,7 +41,7 @@ app.post('/save',form1.build(), function(req, res){
 });
 
 app.get("/downimg/:name",function(req,res){
-    var path = '/tmp/'+req.params.name;
+    var path = '/tmp/~tmp/'+req.params.name;
     res.sendfile(path);
 });
 
