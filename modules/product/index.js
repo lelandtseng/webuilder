@@ -41,7 +41,7 @@ app.post('/save',form1.build(), function(req, res){
 });
 
 app.get("/downimg/:name",function(req,res){
-    var path = '/tmp/~tmp/'+req.params.name;
+    var path = '/tmp/ttt/'+req.params.name;
     res.sendfile(path);
 });
 
