@@ -1,17 +1,23 @@
+
 <ul>
 	<% for(var o in zxproducts){ %>
-		<li><%= zxproducts[o].name %> <img src="/product/downimg/<%=zxproducts[o].img.path%>" width='80' height='60'/>
-		    <a href="/product/edit/<%= zxproducts[o]._id %>">更新</a>  
-		    <a href="/product/delete/<%= zxproducts[o]._id %>">删除</a>
+		<li><%= zxproducts[o].name %> <img src="/product/img/<%=zxproducts[o].img.path%>" width='50' height='60'/>
+		    <a href="/product/<%= zxproducts[o]._id %>/edit">更新</a>  
+		    <form method='post' action='/product/<%= zxproducts[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
 		</li>
 	<% } %>
 </ul>
 
-<a href="/product/page/<%= pageinfo.prevpage%>">prev</a>  
+<a href="/product?page=<%= pageinfo.prevpage%>">prev</a>  
 <% for(var k in pageinfo.pages){ %>
-    <a href="/product/page/<%= pageinfo.pages[k]%>"><%= pageinfo.pages[k]%></a> 
+    <a href="/product?page=<%= pageinfo.pages[k]%>"><%= pageinfo.pages[k]%></a> 
 <% } %>
 
-<a href="/product/page/<%= pageinfo.nextpage%>">next</a>
+<a href="/product?page=<%= pageinfo.nextpage%>">next</a>
 
-<a href='/product/add' >添加</a>
+<a href='/product/new' >添加</a>
+
+

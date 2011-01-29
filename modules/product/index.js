@@ -5,20 +5,17 @@ app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
 var Model = require('../../../mongo-model').Model;
 var ObjectID = require('../../../mongo-model').ObjectID;
-var Product = new Model('products');
-var FormData = require("../../../form-data");
-var form1 = new FormData();
+var Product = new Model('products','/home/lelandtseng/tmp');
+var form = require("./validator").form;
+
 // 产品首页
-app.get('/page/:num', function(req, res){
-    var page = parseInt(req.params.num);
-    
+app.get('/' , function(req, res){
     Product.find({}, {
         sort: [['_id', -1]],
-        pagenum: page,
+        pagenum: req.param('page') ? req.param('page') : 1,
         rsnum: 5
-    }, function(data,pageinfo){   
-   
-         res.render('index.html', {
+    }, function(data,pageinfo){
+         res.render('index.html',{
             zxproducts: data,
             pageinfo:pageinfo
         });
@@ -26,27 +23,29 @@ app.get('/page/:num', function(req, res){
 });
 
 // 打开添加产品的页面
-app.get('/add', function(req, res){
-    res.render('add.html');
+app.get('/new', function(req, res){
+    res.render('new.html');
 });
 
 // 添加产品
-app.post('/save',form1.build(), function(req, res){
-
-        Product.save(req.formdata, function(){
-            //console.log(req.formdata);
-            res.redirect('/product/page/1')
-        });
-    
+app.post('/create',form, function(req, res){
+    if (req.errmsg) {
+        res.render('new.html',{errmsg:req.errmsg});
+    }else{
+       Product.save(req.formdata, function(){
+            res.redirect('/product')
+        });  
+    }
 });
 
-app.get("/downimg/:name",function(req,res){
-    var path = '/tmp/ttt/'+req.params.name;
+// 显示图片
+app.get("/img/:name",function(req,res){
+    var path = '/home/lelandtseng/tmp/'+req.params.name;
     res.sendfile(path);
 });
 
 //打开更新页面
-app.get("/edit/:id", function(req, res){
+app.get("/:id/edit", function(req, res){
     Product.get(new ObjectID(req.params.id), function(data){
         res.render('edit.html', {
             product: data
@@ -55,24 +54,20 @@ app.get("/edit/:id", function(req, res){
 });
 
 // 更新产品
-app.post("/update/:id", function(req, res){
+app.post("/:id/update", form ,function(req, res){
+    
     if (req.errmsg) {
-        Product.get(new ObjectID(req.params.id), function(data){
-            res.render('edit.html', {
-                errmsg: req.errmsg,
-                product: data
-            });
-        });
+        res.render('edit.html',{product:req.formdata});
     }
     else {
-        Product.update(new ObjectID(req.params.id), req.data, function(){
-            res.redirect('/product/page/1')
+        Product.update(new ObjectID(req.params.id), req.formdata, function(){
+            res.redirect('/product')
         });
     }
 })
 
 // 删除产品
-app.get('/delete/:id', function(req, res){
+app.del('/:id', function(req, res){
     Product.remove(new ObjectID(req.params.id), function(){
         res.redirect('back')
     });
