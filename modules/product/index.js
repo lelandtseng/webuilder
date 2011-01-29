@@ -16,6 +16,7 @@ app.get('/' , function(req, res){
         rsnum: 5
     }, function(data,pageinfo){
          res.render('index.html',{
+            layout:!req.xhr,
             zxproducts: data,
             pageinfo:pageinfo
         });
@@ -30,10 +31,10 @@ app.get('/new', function(req, res){
 // 添加产品
 app.post('/create',form, function(req, res){
     if (req.errmsg) {
-        res.render('new.html',{errmsg:req.errmsg});
+        res.render('new.html',{layout:false,errmsg:req.errmsg});
     }else{
        Product.save(req.formdata, function(){
-            res.redirect('/product')
+            res.send("ok");
         });  
     }
 });
