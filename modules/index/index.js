@@ -7,9 +7,9 @@ app.register('.html', require('ejs'));
 //打开首页
 app.get('/',function(req,res,next){
     res.render('index.html',
-        {
-            layout:false , 
-            user:req.session.user ? req.session.user : {loginname:'none'}
+    {
+       layout:false , 
+     user:req.session.user ? req.session.user : {loginname:'none'}
         });
 });
 

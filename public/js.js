@@ -45,9 +45,7 @@
 					connectWith: ".connectedSortable"
 				}).disableSelection();
 				});
-				$('#left,#centent,#right').sortable({
-					connectWith: ".connectedSortable"
-				}).disableSelection();
+				
 				$('#nav').draggable({containment:'#page' });
 
                 function savestate(){

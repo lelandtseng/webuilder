@@ -1,26 +1,27 @@
-<% if(typeof errmsg != 'undefined'){  %>
-<% for(var k in errmsg) { %>
-	<font color='red'><%= errmsg[k] %></font><br/>
-<% } %>
-<% } %>
-<br>edit page:<br>
-<form method='post'  enctype="multipart/form-data"  action='/product/<%= product._id %>/update'>
+<form method='post' enctype="multipart/form-data" id="edit_product_form" action='/product/id'>
+    <fieldset>
+    <legend>编辑产品</legend>
     <label for='product_name'>
         产品名称
     </label>
-    <input id='product_name' type='text' name='name' value="<%= product.name %>" />
+    <input id='product_name' type='text' name='name' />
     <label for='product_price'>
         产品价格
     </label>
-    <input id='product_price' type='text' name='price' value="<%= product.price %>" />
+    <input id='product_price' type='text' name='price' />
     <label for='product_des'>
         产品描述
     </label>
-    <textarea id='product_des' name='des' value="<%= product.des %>"></textarea>
+    <textarea id='product_des' name='des'></textarea>
     <label for='product_img'>
         产品图片
     </label>
-    <input id='product_img' type='file' name='img' /><input type='submit' />
+    <input id='product_img' type='file' name='img' />
+    <label for="vnum">
+        验证码        
+    </label>
+    <input id='vnum' type='text' name='vnum' />
+    <input type='hidden' name='_method' value="put" />
+    <input type='submit' />
+    </fieldset>
 </form>
-
-

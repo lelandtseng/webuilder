@@ -31,7 +31,6 @@
         </script>
     </head>
     <body>  
-        <% if(user.loginname !== 'none' ){ %>     
            <div id='toolbar'>
             <ul>
                 <li>
@@ -50,7 +49,7 @@
                     <a href='#logoc'>标识LOGO</a>
                 </li>
                 <li>
-                    <a href='/modules'>系统模块</a>
+                    <a href='#modules'>系统模块</a>
                 </li>
             </ul>
             <div id='_theme'>
@@ -219,7 +218,19 @@
                 });
             })
         </script>
-        <% } %>
+        <script>
+           function tes(a){
+              var aaa =  $(a).attr("aaa");
+             
+              $.get(aaa,function(data){
+                $("#left").html(data);
+              });
+           }
+        </script>
+        <div id="modules">
+           <span aaa="/product" onclick="tes(this)" >产品</span>
+        </div>
+
         <div id='page'>
             <div id='container'>
                 <div id='header'>

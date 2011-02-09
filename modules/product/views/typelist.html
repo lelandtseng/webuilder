@@ -1,0 +1,11 @@
+<% for(var k in types){  %>
+    <ul>
+        <li><%= types[k].name %> 
+        <form method="post" action="/product/type/<%= types[k]._id %>">
+        <input type="hidden" name="_method" value="delete" />
+        <input type="submit" value="删除"/>
+        </form>
+         </li>
+    </ul>
+<% } %>
+<a href="/product/type/new" > new </a>

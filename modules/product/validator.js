@@ -1,7 +1,7 @@
 var FormData = require("../../../form-data");
 
 var form = new FormData();
-
+/*
 form.validat('name', 'len', {
     min: 2,
     max: 4
@@ -23,5 +23,5 @@ form.validat('img', function(value, params){
     else 
         return true;
 }, {}, "产品图片大小应在60K之内");
-
+*/
 exports.form = form.build();
