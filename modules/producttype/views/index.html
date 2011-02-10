@@ -1,0 +1,11 @@
+<ul>
+	<% for(var o in types){ %>
+		<li><%= types[o].name %> 
+		    <form method='post' action='/producttype/<%= types[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		</li>
+	<% } %>
+</ul>
+

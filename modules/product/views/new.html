@@ -18,11 +18,17 @@
         产品图片
     </label>
     <input id='product_img' type='file' name='img' />
-    <label for="vnum">
-        验证码        
+    <label for="product_type">产品类别</label>
+    <select id="product_type" name="type">
+        <% for(var k in types){ %>
+            <option value="<%=types[k].name %>"><%=types[k].name %></option>
+        <% } %>
+    </select>
+    <label for="product_validatnum">
+        验证码<%= validatnum.first %> + <%= validatnum.second %>
     </label>
-    <input id='vnum' type='text' name='vnum' />
-    <input type='submit' />
+    <input id='product_validatnum' type='text' name='validatnum' />
+    <input type='submit' value='添加产品' />
     </fieldset>
 </form>
 </div>

@@ -1,27 +1,34 @@
-<form method='post' enctype="multipart/form-data" id="edit_product_form" action='/product/id'>
+<form method='post' enctype="multipart/form-data" id="add_product_form" action='/product/<%= product._id %>/update'>
     <fieldset>
-    <legend>编辑产品</legend>
+    <legend>更改产品</legend>
     <label for='product_name'>
         产品名称
     </label>
-    <input id='product_name' type='text' name='name' />
+    <input id='product_name' type='text' name='name' value='<%=product.name%>' />
     <label for='product_price'>
         产品价格
     </label>
-    <input id='product_price' type='text' name='price' />
+    <input id='product_price' type='text' name='price' value='<%=product.price%>' />
     <label for='product_des'>
         产品描述
     </label>
-    <textarea id='product_des' name='des'></textarea>
+    <textarea id='product_des' name='des'><%=product.des%></textarea>
     <label for='product_img'>
         产品图片
+        <img src="/product/img/<%=product.img.path%>" width='120' height='120'/>
     </label>
     <input id='product_img' type='file' name='img' />
-    <label for="vnum">
-        验证码        
+    <label for="product_type">产品类别</label>
+    <select id="product_type" name="type">
+        <option value="<%=product.type%>"><%=product.type%></option>
+        <% for(var k in types){ %>
+            <option value="<%=types[k].name %>"><%=types[k].name %></option>
+        <% } %>
+    </select>
+    <label for="product_validatnum">
+        验证码<%= validatnum.first %> + <%= validatnum.second %>
     </label>
-    <input id='vnum' type='text' name='vnum' />
-    <input type='hidden' name='_method' value="put" />
-    <input type='submit' />
+    <input id='product_validatnum' type='text' name='validatnum' />
+    <input type='submit' value='更改产品' />
     </fieldset>
 </form>

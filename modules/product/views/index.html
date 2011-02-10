@@ -1,7 +1,9 @@
 <div id="productmodule">
 <ul>
 	<% for(var o in zxproducts){ %>
-		<li><%= zxproducts[o].name %> <img src="/product/img/<%=zxproducts[o].img.path%>" width='50' height='60'/>
+		<li>
+		<img src="/product/img/<%=zxproducts[o].img.path%>" width='120' height='120'/>
+		
 		    <a href="/product/<%= zxproducts[o]._id %>/edit">更新</a>  
 		    <form method='post' action='/product/<%= zxproducts[o]._id %>'>
 		        <input type='hidden' name='_method' value='delete' />
@@ -11,25 +13,11 @@
 	<% } %>
 </ul>
 
-<a onclick="return link(this);" href="/product?page=<%= pageinfo.prevpage%>">prev</a>  
+<a href="/product?page=<%= pageinfo.prevpage%>">prev</a>  
 <% for(var k in pageinfo.pages){ %>
-    <a onclick="return link(this);" href="/product?page=<%= pageinfo.pages[k]%>"><%= pageinfo.pages[k]%></a> 
+    <a href="/product?page=<%= pageinfo.pages[k]%>"><%= pageinfo.pages[k]%></a> 
 <% } %>
 
-<a href="/product?page=<%= pageinfo.nextpage%>" onclick="return link(this);">next</a>
-
-<a onclick="return link(this);"  href='/product/new' >添加</a>
-<div id='create'></div>
-<script>
-    function link(self){
-        var url = $(self).attr('href');
-        
-        $.get(url,function(data){
-            $('#create').html(data);
-            return false;
-        })
-        
-        return false;
-    }
-</script>
+<a href="/product?page=<%= pageinfo.nextpage%>" >next</a>
+<a href='/product/new' >添加</a>
 </div>
