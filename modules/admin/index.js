@@ -1,4 +1,4 @@
-var Model = require('mongo-model').Model;
+var Model = require('../../../mongo-model').Model;
 var express = require('express');
 var app = module.exports = express.createServer();
 app.set('views', __dirname + '/views');
@@ -9,35 +9,26 @@ var User = new Model('users');
 
 var User = new Model('users');
 
-var createVN = require('express-validatnum').createVN;
-var validatVN = require('express-validatnum').validatVN;
-
 // 验证是否有adm
 function yz(req, res, next){
     if (req.session && req.session.adm) {
         next();
     }
     else {
-        res.render('login.html' ,{
-            vname:req.session.vnum.vname,
-            a:req.session.vnum.a,
-            b:req.session.vnum.b
-        })
+        res.render('login.html')
     }
 }
 
 // 打开添加页面
-app.get('/add', yz,createVN, function(req, res){
-    res.render('add.html',{
-        vname:req.session.vnum.vname,a:req.session.vnum.a,b:req.session.vnum.b
-    });
+app.get('/add', yz, function(req, res){
+    res.render('add.html');
 });
 
 
 
 
 // 显示主页
-app.get('/', createVN , yz,  function(req, res){
+app.get('/', yz,  function(req, res){
 
     User.find({},{},function(data){
         res.render('index.html', {
@@ -46,19 +37,15 @@ app.get('/', createVN , yz,  function(req, res){
         });
 });
 
-app.post('/save', yz, validatVN , function(req, res){
-    if(req.vn){
-    req.body._id = req.body.loginname;
+app.post('/save', yz, function(req, res){
+      req.body._id = req.body.loginname;
       User.save(req.body,function(){
         res.redirect('/admin')
-      });    
-    }else{
-        res.redirect('/admin/add');
-    }
+      });
 });
 
 // 显示主页
-app.get('/',createVN ,  yz, function(req, res){
+app.get('/', yz, function(req, res){
     User.find({},{},function(data){
         res.render('index.html', {
             users: data
@@ -77,7 +64,7 @@ app.get('/edit/:id',yz, function(req, res){
 });
 
 // 更新用户信息
-app.post('/update/:id',yz, createVN ,function(req,res){
+app.post('/update/:id',yz,function(req,res){
     User.update(req.params.id,req.body,function(){
        res.redirect('/admin')
     });
@@ -90,45 +77,14 @@ app.get('/delete/:id', yz ,function(req, res){
     });
 });
 
-app.post('/login', validatVN , function(req, res){
+app.post('/login' , function(req, res){
 
     var loginname = req.body['loginname'];
     var password = req.body['password'];
-    if (req.vn && loginname && password && loginname == 'admin' && password == 'jialu1024') {
+    if (loginname && password && loginname == 'admin' && password == 'jialu1024') {
         req.session.adm = 1;
    
     }
     res.redirect('/admin');
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

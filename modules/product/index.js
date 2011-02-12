@@ -1,5 +1,7 @@
 var express = require('express');
+var helpers = require('express-helpers');
 var app = module.exports = express.createServer();
+var app = helpers.all(app);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
@@ -17,8 +19,19 @@ function alltype(req, res , next){
     });
 }
 
+function bestproducts(req,res,next){
+    Product.find({best:true}, {
+        sort: [['_id', -1]],
+        pagenum: req.param('page') ? req.param('page') : 1,
+        rsnum: 5
+    }, function(data,pageinfo){
+        req.bestproducts = data;
+        next();
+    });    
+}
+
 // 产品首页
-app.get('/' , function(req, res){
+app.get('/' ,bestproducts, function(req, res){
     Product.find({}, {
         sort: [['_id', -1]],
         pagenum: req.param('page') ? req.param('page') : 1,
@@ -27,6 +40,7 @@ app.get('/' , function(req, res){
          res.render('index.html',{
             layout:!req.xhr,
             zxproducts: data,
+            bestproducts:req.bestproducts,
             pageinfo:pageinfo
         });
     });
@@ -34,13 +48,17 @@ app.get('/' , function(req, res){
 
 // 打开添加产品的页面
 app.get('/new', form, alltype , function(req, res){
-    res.render('new.html',{types:req.types,validatnum:req.validatnum});
+    res.render('new.html',{errmsg:[],product:{},types:req.types,validatnum:req.validatnum});
 });
 
 // 添加产品
-app.post('/create',form, function(req, res){
+app.post('/create',form,alltype, function(req, res){
     if (req.errmsg) {
-        res.render('new.html',{layout:false,errmsg:req.errmsg});
+        res.render('new.html',{
+            types:req.types,
+            validatnum:req.validatnum,
+            errmsg:req.errmsg,
+            product:req.formdata});
     }else{
        Product.save(req.formdata, function(){
             res.redirect('/product');
@@ -68,7 +86,7 @@ app.get("/:id/edit", form , alltype , function(req, res){
 // 更新产品
 app.post("/:id/update", form ,function(req, res){
     if (req.errmsg) {
-        res.render('edit.html',{product:req.formdata});
+        res.redirect('back');
     }
     else {
         Product.update(new ObjectID(req.params.id), req.formdata, function(){

@@ -25,6 +25,16 @@
             <option value="<%=types[k].name %>"><%=types[k].name %></option>
         <% } %>
     </select>
+    <label for="product_best">推荐产品</label>
+    <select id="product_best" name="best">
+        <% if(product.best){ %>
+        <option value="true">推荐</option>
+        <option value="false">不推荐</option>
+        <% }else{ %>
+        <option value="false">不推荐</option>
+        <option value="true">推荐</option>
+        <% } %>
+    </select>
     <label for="product_validatnum">
         验证码<%= validatnum.first %> + <%= validatnum.second %>
     </label>
