@@ -1,0 +1,52 @@
+<ul>
+    <% for(var k in errmsg){ %>
+        <li><%=errmsg[k]%></li>
+    <% } %>
+</ul>
+<div>
+<form method='post' enctype="multipart/form-data" id="add_product_form" action='/product/create'>
+    <fieldset>
+    <legend>添加产品</legend>
+    <label for='product_name'>
+        产品名称
+    </label>
+    <input id='product_name' type='text' value='<%- product?(product.name?product.name:"") : "" %>' name='name' />
+    <label for='product_price'>
+        产品价格
+    </label>
+    <input id='product_price' value='<%- product?(product.price?product.price:"") : "" %>' type='text' name='price' />
+    <label for='product_des'>
+        产品描述
+    </label>
+    <textarea id='product_des' name='des'><%- product?(product.des?product.des:"") : "" %></textarea>
+    <label for='product_img'>
+        产品图片
+    </label>
+    <input id='product_img' type='file' name='img' />
+    <label for="product_type">产品类别</label>
+    <select id="product_type" name="type">
+        <% if(product.type){ %>
+            <option value="<%=product.type %>"><%=product.type %></option>
+        <% } %>
+        <% for(var k in types){ %>
+            <option value="<%=types[k].name %>"><%=types[k].name %></option>
+        <% } %>
+    </select>
+    <label for="product_best">推荐产品</label>
+    <select id="product_best" name="best">
+        <% if(product.best){ %>
+        <option value="true">推荐</option>
+        <option value="false">不推荐</option>
+        <% }else{ %>
+        <option value="false">不推荐</option>
+        <option value="true">推荐</option>
+        <% } %>
+    </select>
+    <label for="product_validatnum">
+        验证码<%= validatnum.first %> + <%= validatnum.second %>
+    </label>
+    <input id='product_validatnum' type='text' name='validatnum' />
+    <input type='submit' value='添加产品' />
+    </fieldset>
+</form>
+</div>

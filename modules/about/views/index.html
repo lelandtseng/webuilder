@@ -1,0 +1,39 @@
+<div id="productmodule">
+<ul>
+	<% for(var o in zxproducts){ %>
+		<li>
+		<img src="/product/img/<%=zxproducts[o].img.path%>" width='120' height='120'/>
+		
+		    <a href="/product/<%= zxproducts[o]._id %>/edit">更新</a>  
+		    <form method='post' action='/product/<%= zxproducts[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		</li>
+	<% } %>
+</ul>
+
+<a href="/product?page=<%= pageinfo.prevpage%>">prev</a>  
+<% for(var k in pageinfo.pages){ %>
+    <a href="/product?page=<%= pageinfo.pages[k]%>"><%= pageinfo.pages[k]%></a> 
+<% } %>
+
+<a href="/product?page=<%= pageinfo.nextpage%>" >next</a>
+<a href='/product/new' >添加</a>
+</div>
+
+<hr/>
+
+<ul>
+	<% for(var o in bestproducts){ %>
+		<li style="background-color:blue">
+		<img src="/product/img/<%=bestproducts[o].img.path%>" width='120' height='120'/>
+		
+		    <a href="/product/<%= bestproducts[o]._id %>/edit">更新</a>  
+		    <form method='post' action='/product/<%= bestproducts[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		</li>
+	<% } %>
+</ul>
