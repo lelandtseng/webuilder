@@ -1,12 +1,9 @@
-var Model = require('../../../mongo-model').Model;
+var Model = require('mongo-model').Model;
 var express = require('express');
 var app = module.exports = express.createServer();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
-var User = new Model('users');
-
-
 var User = new Model('users');
 
 // 验证是否有adm

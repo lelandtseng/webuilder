@@ -1,4 +1,6 @@
 var express = require('express');
+var Model = require('mongo-model').Model;
+var User = new Model('users');
 var app = module.exports = express.createServer();
 
 app.set('views', __dirname + '/views');
@@ -15,24 +17,14 @@ app.post('/login',function(req, res){
     var loginname = req.body['loginname'];
     var password = req.body['password'];
     
-    db.collection('users', function(err, con){
-        con.find({
-            _id : loginname
-        }, function(err, users){
-            users.toArray(function(err, users){
-                if (users.length == 0) 
-                    res.redirect('/login');
-                else {
-                    if (users[0].password == password) {
-                        req.session.user = users[0];
-                        res.render('loginsuccess.html');
-                    }
-                    else {
-                        res.redirect('/login');
-                    }
-                }
-            });
-        });
-    });
+    User.find({loginname:loginname,password:password},{},function(users){
+        if(users[0]){
+            req.session.loginuser = users[0];
+            res.redirect('/product');
+        }else{
+            res.redirect('/login');
+        }
+    });    
+
 });
 

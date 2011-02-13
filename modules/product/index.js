@@ -5,11 +5,29 @@ var app = helpers.all(app);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
-var Model = require('../../../mongo-model').Model;
-var ObjectID = require('../../../mongo-model').ObjectID;
+var Model = require('mongo-model').Model;
+var ObjectID = require('mongo-model').ObjectID;
 var Product = new Model('products','/home/lelandtseng/tmp');
 var ProductType = new Model('producttypes');
 var form = require("./validator").form;
+
+//验证
+function yz(req,res,next){
+    if(req.session.loginuser){
+            if(req.params.id){
+            Product.find({_id:new ObjectID(req.params.id)}, {},function(ps){
+                if(ps[0] && ps[0].user == req.session.loginuser.loginname){
+                    
+                    next();
+                }else{
+                    res.redirect('/product');
+                }
+            });
+            }else{next();}
+    }else{
+        res.redirect("/login");
+    }
+}
 
 // 全部产品类型
 function alltype(req, res , next){
@@ -52,7 +70,7 @@ app.get('/new', form, alltype , function(req, res){
 });
 
 // 添加产品
-app.post('/create',form,alltype, function(req, res){
+app.post('/create',yz,form,alltype, function(req, res){
     if (req.errmsg) {
         res.render('new.html',{
             types:req.types,
@@ -60,6 +78,7 @@ app.post('/create',form,alltype, function(req, res){
             errmsg:req.errmsg,
             product:req.formdata});
     }else{
+       req.formdata.user = req.session.loginuser.loginname;
        Product.save(req.formdata, function(){
             res.redirect('/product');
        });  
@@ -96,9 +115,10 @@ app.post("/:id/update", form ,function(req, res){
 })
 
 // 删除产品
-app.del('/:id',function(req,res){
+app.del('/:id',yz,function(req,res){
+    
     Product.remove(new ObjectID(req.params.id),function(){
-        res.redirect('/product');    
+        res.redirect('/product'); 
     });
 });
 
