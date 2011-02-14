@@ -8,13 +8,16 @@ app.register('.html', require('ejs'));
 app.get('/',function(req,res,next){
     res.render('index.html',
     {
-       layout:false , 
-     user:req.session.user ? req.session.user : {loginname:'none'}
-        });
+     layout:false , 
+     loginuser:req.session.loginuser ? req.session.loginuser : false,
+     left:[],
+     center:[],
+     right:[]
+    });
 });
 
 //保存网站状态
 app.post('/save',function(req,res){
-
+    
 });
 

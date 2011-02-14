@@ -29,6 +29,10 @@ function yz(req,res,next){
     }
 }
 
+function yz2(req,res,next){
+    req.session.loginuser?next():res.redirect("/login");
+}
+
 // 全部产品类型
 function alltype(req, res , next){
     ProductType.find({}, {}, function(data){
@@ -65,7 +69,7 @@ app.get('/' ,bestproducts, function(req, res){
 });
 
 // 打开添加产品的页面
-app.get('/new', form, alltype , function(req, res){
+app.get('/new', yz2, form, alltype , function(req, res){
     res.render('new.html',{errmsg:[],product:{},types:req.types,validatnum:req.validatnum});
 });
 
@@ -103,7 +107,7 @@ app.get("/:id/edit", form , alltype , function(req, res){
 });
 
 // 更新产品
-app.post("/:id/update", form ,function(req, res){
+app.post("/:id/update", yz2, form ,function(req, res){
     if (req.errmsg) {
         res.redirect('back');
     }
