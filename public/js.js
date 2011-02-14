@@ -63,11 +63,23 @@
                     var navtop = $('#nav').css('top');
                     var navleft = $('#nav').css('left');
                     // 保存模块
-                    var leftmodelnames = null;
-                    var centermodelnames = null;
-                    var rightmodelnames = null;                   
+                  //  var leftmodelnames = null;
+                  //  var centermodelnames = null;
+                  //  var rightmodelnames = null;                   
                     
-                    
+                  $.post("/savestate",
+                    {
+                        theme:theme,
+                        leftcss:leftcss,
+                        cententcss:cententcss,
+                        rightcss:rightcss,
+                        headerlength:headerlength,
+                        logosize:logosize,
+                        navtop:navtop,
+                        navleft:navleft
+                    },function(data){
+                        alert(data);
+                    }); 
                     
                 }
                 

@@ -11,7 +11,13 @@
         </script>      
        
         <link rel="stylesheet" 
-                href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/base/jquery-ui.css" 
+                href="
+                <% if(state.theme){ %>
+                    <%= state.theme%>
+                <% }else{ %>
+                http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/base/jquery-ui.css 
+                <% } %>"
+                
                 type="text/css" /> 
         <script src='/main.js'>
         </script>
@@ -282,7 +288,7 @@
                         show reg dialog button
                     </button>
                     <button id='show-toolbar-button'>
-                        show toolbar button
+                        save state!
                     </button>
                 </div>
                 <div id='dialog'>
