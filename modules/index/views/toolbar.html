@@ -1,0 +1,146 @@
+<div id='toolbar'>
+    <ul>
+        <li><a href='#_theme'>色调</a></li>
+        <li><a href='#layout'>布局</a></li>
+        <li><a href='#bg'>背景</a></li>
+        <li><a href='#btl'>标题栏</a></li>
+        <li><a href='#logoc'>标识LOGO</a></li>
+        <li><a href='#modules'>系统模块</a></li>
+    </ul>
+    <div id='_theme'>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/ui-lightness/jquery-ui.css'>
+        <img src='/theme_90_ui_light.png' />
+        </div>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/ui-darkness/jquery-ui.css'>
+        <img src='/theme_90_ui_dark.png'/>
+        </div>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/smoothness/jquery-ui.css'>
+        <img src='/theme_90_smoothness.png'/>
+        </div>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/start/jquery-ui.css'>
+        <img src='/theme_90_start_menu.png' />
+        </div>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/redmond/jquery-ui.css'>
+        <img src='/theme_90_windoze.png' />
+        </div>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/sunny/jquery-ui.css'>
+        <img src='/theme_90_sunny.png' />
+        </div>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/overcast/jquery-ui.css'>
+        <img src='/theme_90_overcast.png' />
+        </div>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/le-frog/jquery-ui.css'>
+        <img src='/theme_90_le_frog.png' />
+        </div>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/flick/jquery-ui.css'>
+        <img src='/theme_90_flick.png' />
+        </div>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/pepper-grinder/jquery-ui.css'>
+        <img src='/theme_90_pepper_grinder.png'/>
+        </div>
+        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/le-frog/jquery-ui.css'>
+        <img src='/theme_90_le-frog_menu.png' />
+        </div>
+        <div style='clear:both'>
+        </div>
+    </div>
+    
+    <div id='layout'>
+        <div class='layout' layout='25:75'>1:3</div>
+        <div class='layout' layout='20:60:20'>1:3:1</div>
+    </div>
+    <script>
+    $(function(){
+        $('#show-bg').click(function(){
+        $('body').css('background-image', 'url(http://isd.tencent.com/wp-content/themes/teamblog/img/job_2010.gif)');});
+        $('#bg-gundong').click(function(){
+        $('body').css('background-attachment', 'scroll')
+        });
+        $('#bg-guding').click(function(){
+        $('body').css('background-attachment', 'fixed')
+        });
+        $('#bg-zuoshang').click(function(){
+        $('body').css('background-position', 'top left')
+        });
+        $('#bg-pingpu').click(function(){
+        $('body').css('background-repeat', 'repeat')
+        });
+        $('#bg-nopingpu').click(function(){
+        $('body').css('background-repeat', 'no-repeat')
+        });
+        $('#bg-shang').click(function(){
+        $('body').css('background-position', 'top center')
+        });
+        $('#bg-youshang').click(function(){
+        $('body').css('background-position', 'top right')
+        });
+        $('#bg-guding').click(function(){
+        $('body').css('background-attachment', 'fixed')
+        });
+    })
+    </script>
+    <div id='bg'>
+        <button id='show-bg'>显示背景</button>
+        <button id='bg-pingpu'>平铺</button>
+        <button id='bg-nopingpu'>不平铺</button>
+        <button id='bg-zuoshang'>左上对齐</button>
+        <button id='bg-shang'>上居中对齐</button>
+        <button id='bg-youshang'>右上对齐</button>
+        <input type='radio' name='gp' id='bg-gundong'/>
+        <input type='radio' name='gp' id='bg-guding'/>
+    </div>
+    <div id='btl'>
+        <div id='slide'></div>
+        <button id='btl-show-image'>显示导航背景</button>
+        <button id='btl-hide-image'>隐藏导航背景</button>
+    </div>
+    <script>
+    $(function(){
+        $('#slide').slider({
+            value: 80,
+            min: 80,
+            max: 350,
+            step: 10,
+            slide: function(event, ui){
+            $('#header').css('height', ui.value + 'px');
+            }
+        });
+        $('#btl-show-image').click(function(){
+            $('#header').css('background','url(http://www.google.com.hk/intl/zh-CN/images/logo_cn.png)');
+        });
+        $('#btl-hide-image').click(function(){
+            $('#header').css('background', 'none');
+        });
+    })
+    </script>
+    <div id='logoc'>
+        <div id='logo-slide'></div>
+            <button id='logo-show-image'>显示Logo</button>
+            <button id='logo-hide-image'>隐藏Logo</button>
+        </div>
+        <div style='clear:both'></div>
+    </div>
+    <script>
+    $(function(){
+    $('#logo-slide').slider({
+        value: 30,
+        min: 30,
+        max: 150,
+        step: 5,
+        slide: function(event, ui){
+        $('#logo').css('height', ui.value + 'px');
+        $('#logo').css('width', ui.value + 'px');
+        }
+    });
+    $('#logo-show-image').click(function(){
+        $('#logo').css('background', 'url(http://www.google.com.hk/intl/zh-CN/images/logo_cn.png)');
+    });
+    $('#logo-hide-image').click(function(){
+        $('#logo').css('background', 'none');
+    });
+    })
+    </script>
+
+<div id="modules">
+    <span aaa="/product" onclick="tes(this)" >产品</span>
+</div>

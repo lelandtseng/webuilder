@@ -8,7 +8,8 @@ var Model = require('mongo-model').Model;
 var SiteState = new Model("sitestate");
 
 function state(req,res,next){
-    SiteState.find({user:req.session.loginuser?req.session.loginuser.loginname:null},{},function(data){
+    SiteState.find({user:req.session.loginuser?req.session.loginuser.loginname:null},{},function(data)
+    {
         req.state = data[0]?data[0]:{};
         next();
     });
@@ -17,10 +18,9 @@ function state(req,res,next){
 //打开首页
 app.get('/',state,function(req,res,next){
     res.render('index.html',
-    {
-     layout:false , 
-     loginuser:req.session.loginuser ? req.session.loginuser : false,
-     state:req.state
+    {     
+        loginuser:req.session.loginuser ? req.session.loginuser : false,
+        state:req.state
     });
 });
 

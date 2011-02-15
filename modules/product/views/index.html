@@ -3,7 +3,6 @@
 	<% for(var o in zxproducts){ %>
 		<li>
 		<img src="/product/img/<%=zxproducts[o].img.path%>" width='120' height='120'/>
-		
 		    <a href="/product/<%= zxproducts[o]._id %>/edit">更新</a>  
 		    <form method='post' action='/product/<%= zxproducts[o]._id %>'>
 		        <input type='hidden' name='_method' value='delete' />
