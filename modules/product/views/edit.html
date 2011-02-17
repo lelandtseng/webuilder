@@ -1,4 +1,9 @@
-<form method='post' enctype="multipart/form-data" id="add_product_form" action='/product/<%= product._id %>/update'>
+<ul>
+    <% for(var k in errmsg){ %>
+        <li><%=errmsg[k]%></li>
+    <% } %>
+</ul>
+<form method='post' enctype="multipart/form-data" id="edit_product_form" action='/product/<%= product._id %>/update'>
     <fieldset>
     <legend>更改产品</legend>
     <label for='product_name'>
@@ -42,3 +47,22 @@
     <input type='submit' value='更改产品' />
     </fieldset>
 </form>
+<style>
+    input , textarea ,select{
+        display : block;
+    }
+</style>
+
+<script>
+    $("#edit_product_form").ajaxForm(function(data){
+           if("success" == data){
+            $.get("/product?"+new Date().getTime(),function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });    
+           }else{
+            $("#dialog").html(data);
+            $("#dialog").dialog('open');
+           }
+    });
+</script>

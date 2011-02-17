@@ -20,7 +20,6 @@ function yz(req,res,next){
                     
                     next();
                 }else{
-                    console.log("ddddddddddddddddddddddddddd");
                     res.redirect('/login');
                 }
             });
@@ -61,6 +60,7 @@ app.get('/' ,bestproducts, function(req, res){
         rsnum: 5
     }, function(data,pageinfo){
          res.render('index.html',{
+            logined:req.session.loginuser?req.session.loginuser:false,
             layout:!req.xhr,
             zxproducts: data,
             bestproducts:req.bestproducts,
@@ -98,21 +98,29 @@ app.get("/img/:name",function(req,res){
 });
 
 //打开更新页面
-app.get("/:id/edit", form , alltype , function(req, res){
+app.get("/:id/edit", form,alltype , function(req, res){
     Product.get(new ObjectID(req.params.id), function(data){
         res.render('edit.html', {
             layout:false,
             product: data,
             types:req.types,
-            validatnum:req.validatnum
+            validatnum:req.validatnum,
+            errmsg:false
         });
     });
 });
 
 // 更新产品
-app.post("/:id/update", yz2, form ,function(req, res){
+app.post("/:id/update", yz2, form,  alltype ,function(req, res){
     if (req.errmsg) {
-        res.redirect('back');
+        req.formdata._id = req.params.id;
+        res.render('edit.html', {
+            layout:false,
+            product: req.formdata,
+            types:req.types,
+            validatnum:req.validatnum,
+            errmsg:req.errmsg
+        });
     }
     else {
         Product.update(new ObjectID(req.params.id), req.formdata, function(){
