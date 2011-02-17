@@ -18,7 +18,7 @@
 <% } %>
 
 <a href="/product?page=<%= pageinfo.nextpage%>" >next</a>
-<a href='/product/new' >添加</a>
+<a href='#' id="open_add_product_dialog_link" >添加</a>
 </div>
 
 <hr/>
@@ -29,10 +29,31 @@
 		<img src="/product/img/<%=bestproducts[o].img.path%>" width='120' height='120'/>
 		
 		    <a href="/product/<%= bestproducts[o]._id %>/edit">更新</a>  
-		    <form method='post' action='/product/<%= bestproducts[o]._id %>'>
+		    <form method='post' class="del_product" action='/product/<%= bestproducts[o]._id %>'>
 		        <input type='hidden' name='_method' value='delete' />
 		        <input type='submit' value='删除' />
 		    </form>
 		</li>
 	<% } %>
 </ul>
+
+<script>
+    
+    $("#open_add_product_dialog_link").click(function(){
+        $.get("/product/new",function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+
+    $(".del_product").ajaxForm(function(data){
+          if("success" == data){
+            $.get("/product",function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });
+          }
+    });
+    
+    
+</script>

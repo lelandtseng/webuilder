@@ -20,7 +20,8 @@ function yz(req,res,next){
                     
                     next();
                 }else{
-                    res.redirect('/product');
+                    console.log("ddddddddddddddddddddddddddd");
+                    res.redirect('/login');
                 }
             });
             }else{next();}
@@ -70,13 +71,14 @@ app.get('/' ,bestproducts, function(req, res){
 
 // 打开添加产品的页面
 app.get('/new', yz2, form, alltype , function(req, res){
-    res.render('new.html',{errmsg:[],product:{},types:req.types,validatnum:req.validatnum});
+    res.render('new.html',{layout:false,errmsg:[],product:{},types:req.types,validatnum:req.validatnum});
 });
 
 // 添加产品
 app.post('/create',yz,form,alltype, function(req, res){
     if (req.errmsg) {
         res.render('new.html',{
+            layout:false,
             types:req.types,
             validatnum:req.validatnum,
             errmsg:req.errmsg,
@@ -84,7 +86,7 @@ app.post('/create',yz,form,alltype, function(req, res){
     }else{
        req.formdata.user = req.session.loginuser.loginname;
        Product.save(req.formdata, function(){
-            res.redirect('/product');
+            res.send("success");
        });  
     }
 });
@@ -99,6 +101,7 @@ app.get("/img/:name",function(req,res){
 app.get("/:id/edit", form , alltype , function(req, res){
     Product.get(new ObjectID(req.params.id), function(data){
         res.render('edit.html', {
+            layout:false,
             product: data,
             types:req.types,
             validatnum:req.validatnum
@@ -113,16 +116,15 @@ app.post("/:id/update", yz2, form ,function(req, res){
     }
     else {
         Product.update(new ObjectID(req.params.id), req.formdata, function(){
-            res.redirect('/product')
+            res.send("success");
         });
     }
 })
 
 // 删除产品
 app.del('/:id',yz,function(req,res){
-    
     Product.remove(new ObjectID(req.params.id),function(){
-        res.redirect('/product'); 
+        res.send("success");
     });
 });
 

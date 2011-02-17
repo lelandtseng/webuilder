@@ -50,3 +50,23 @@
     </fieldset>
 </form>
 </div>
+
+<style>
+    input , textarea ,select{
+        display : block;
+    }
+</style>
+
+<script>
+    $("#add_product_form").ajaxForm(function(data){
+           if("success" == data){
+            $.get("/product",function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });    
+           }else{
+            $("#dialog").html(data);
+            $("#dialog").dialog('open');
+           }
+    });
+</script>

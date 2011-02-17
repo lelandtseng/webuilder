@@ -70,4 +70,6 @@ $('#show-toolbar-button').click(function(){
     savestate();
 });
 
+$("#dialog").dialog({ autoOpen: false ,model:true});
+
 })
