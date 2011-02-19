@@ -1,8 +1,15 @@
+<div id="navbar">
+    <a href="/">首页</a>
+     -> 产品
+
+</div>
 <div id="productmodule">
 <ul>
 	<% for(var o in zxproducts){ %>
 		<li>
+		<a href="/product/<%= zxproducts[o]._id %>">
 		<img src="/product/img/<%=zxproducts[o].img.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
+		</a>
 		    <% if(logined){ %>
 		    <a class="open_edit_product_dialog_link" href="#" url="/product/<%= zxproducts[o]._id %>/edit">更新</a>  
 		    <form method='post' class="del_product" action='/product/<%= zxproducts[o]._id %>'>

@@ -64,7 +64,8 @@ app.get('/' ,bestproducts, function(req, res){
             layout:!req.xhr,
             zxproducts: data,
             bestproducts:req.bestproducts,
-            pageinfo:pageinfo
+            pageinfo:pageinfo,
+            product:false
         });
     });
 });
@@ -72,6 +73,15 @@ app.get('/' ,bestproducts, function(req, res){
 // 打开添加产品的页面
 app.get('/new', yz2, form, alltype , function(req, res){
     res.render('new.html',{layout:false,errmsg:[],product:{},types:req.types,validatnum:req.validatnum});
+});
+
+app.get('/:id', function(req, res){
+    console.log("dddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaa");
+    Product.get(new ObjectID(req.params.id), function(data){
+        res.render('view.html', {
+            product: data
+        });
+    });
 });
 
 // 添加产品
