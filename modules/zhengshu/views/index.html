@@ -1,0 +1,53 @@
+<div id="navbar">
+    <a href="/">首页</a>
+     -> 证书
+
+</div>
+<div id="zhengshumodule">
+<ul>
+	<% for(var o in zhengshus){ %>
+		<li>
+		<a href="/zhengshu/<%= zxproducts[o]._id %>">
+		<img src="/zhengshu/img/<%=zhengshus[o].img.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
+		</a>
+		    <% if(logined){ %>
+		    <a class="open_edit_zhengshu_dialog_link" href="#" url="/zhengshu/<%= zhengshus[o]._id %>/edit">更新</a>  
+		    <form method='post' class="del_zhengshu" action='/zhengshu/<%= zhengshus[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		    <% } %>
+		</li>
+	<% } %>
+</ul>
+
+</div>
+
+<script>
+    
+    $("#open_add_zhengshu_dialog_link").click(function(){
+        $.get("/zhengshu/new",function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+    
+    $(".open_edit_zhengshu_dialog_link").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+
+
+    $(".del_zhengshu").ajaxForm(function(data){
+          if("success" == data){
+            $.get("/zhengshu",function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });
+          }
+    });
+    
+</script>

@@ -1,0 +1,54 @@
+<ul>
+    <% for(var k in errmsg){ %>
+        <li><%=errmsg[k]%></li>
+    <% } %>
+</ul>
+<form method='post' enctype="multipart/form-data" id="edit_zhengshu_form" action='/zhengshu/<%= zhengshu._id %>/update'>
+    <fieldset>
+    <legend>更改证书</legend>
+    <label for='zhengshu_name'>
+        证书名称
+    </label>
+    <input id='zhengshu_name' type='text' name='name' value='<%=zhengshu.name%>' />
+    <label for='zhengshu_small_img'>
+        证书小图
+        <img src="/zhengshu/img/<%=zhengshu.smallimg.path%>" width='120' height='120'/>
+    </label>
+    <input id='zhengshu_small_img' type='file' name='smallimg' />
+    <label for='zhengshu_big_img'>
+        证书大图
+        <img src="/zhengshu/img/<%=zhengshu.bigimg.path%>" width='120' height='120'/>
+    </label>
+    <input id='zhengshu_big_img' type='file' name='bigimg' />
+    <label for="zhengshu_type">产品类别</label>
+    <select id="zhengshu_type" name="type">
+        <option value="<%=zhengshu.type%>"><%=zhengshu.type%></option>
+        <option value="abc">aaa</option>
+        <option value="abc">bbb</option>
+    </select>
+    <label for="zhengshu_validatnum">
+        验证码<%= validatnum.first %> + <%= validatnum.second %>
+    </label>
+    <input id='zhengshu_validatnum' type='text' name='validatnum' />
+    <input type='submit' value='更改证书' />
+    </fieldset>
+</form>
+<style>
+    input , textarea ,select{
+        display : block;
+    }
+</style>
+
+<script>
+    $("#edit_zhengshu_form").ajaxForm(function(data){
+           if("success" == data){
+            $.get("/zhengshu?"+new Date().getTime(),function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });    
+           }else{
+            $("#dialog").html(data);
+            $("#dialog").dialog('open');
+           }
+    });
+</script>
