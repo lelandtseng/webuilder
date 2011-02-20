@@ -72,4 +72,10 @@ $('#show-toolbar-button').click(function(){
 
 $("#dialog").dialog({ autoOpen: false ,model:true});
 
+// show nav.
+$.get('/nav',function(data){
+    $("#nav").html(data);
+});
+
+
 })
