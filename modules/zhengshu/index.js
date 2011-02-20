@@ -63,7 +63,7 @@ app.get('/:id', function(req, res){
 app.post('/create',yz,form,function(req, res){
     if (req.errmsg) {
         res.render('new.html',{
-            layout:false，
+            layout:false,
             validatnum:req.validatnum,
             errmsg:req.errmsg,
             zhengshu:req.formdata});

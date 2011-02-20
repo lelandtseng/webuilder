@@ -7,8 +7,9 @@
 <ul>
 	<% for(var o in zhengshus){ %>
 		<li>
-		<a href="/zhengshu/<%= zxproducts[o]._id %>">
-		<img src="/zhengshu/img/<%=zhengshus[o].img.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
+		<a href="/zhengshu/<%= zhengshus[o]._id %>">
+		<%= zhengshus[o].name %>
+		<img src="/zhengshu/img/<%=zhengshus[o].smallimg.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
 		</a>
 		    <% if(logined){ %>
 		    <a class="open_edit_zhengshu_dialog_link" href="#" url="/zhengshu/<%= zhengshus[o]._id %>/edit">更新</a>  
@@ -20,7 +21,9 @@
 		</li>
 	<% } %>
 </ul>
-
+<% if(logined){ %>
+<a href='#' id="open_add_zhengshu_dialog_link" >添加</a>
+<% } %>
 </div>
 
 <script>
