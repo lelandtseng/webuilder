@@ -1,3 +1,4 @@
+
 var express = require('express');
 var helpers = require('express-helpers');
 var app = module.exports = express.createServer();
@@ -70,13 +71,29 @@ app.get('/' ,bestproducts, function(req, res){
     });
 });
 
+// 产品首页
+app.get('/type/:typename' , function(req, res){
+    Product.find({type:req.params.typename}, {
+        sort: [['_id', -1]],
+        pagenum: req.param('page') ? req.param('page') : 1,
+        rsnum: 5
+    }, function(data,pageinfo){
+         res.render('type.html',{
+            layout:!req.xhr,
+            products: data,
+            pageinfo:pageinfo,
+            typename:req.params.typename
+        });
+    });
+});
+
+
 // 打开添加产品的页面
 app.get('/new', yz2, form, alltype , function(req, res){
     res.render('new.html',{layout:false,errmsg:[],product:{},types:req.types,validatnum:req.validatnum});
 });
 
 app.get('/:id', function(req, res){
-    console.log("dddddddddddddddddddddaaaaaaaaaaaaaaaaaaaaaa");
     Product.get(new ObjectID(req.params.id), function(data){
         res.render('view.html', {
             product: data

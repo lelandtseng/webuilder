@@ -17,7 +17,7 @@ function yz(req,res,next){
                     
                     next();
                 }else{
-                    res.redirect('/producttype');
+                    res.redirect('/login');
                 }
             });
             }else{next();}
@@ -34,6 +34,7 @@ function yz2(req,res,next){
 app.get('/' , function(req, res){
     ProductType.find({}, {}, function(data){
          res.render('index.html',{
+            layout:false,
             types:data,editable:req.session.loginuser?true:false
         });
     });
@@ -57,7 +58,7 @@ app.post('/create',yz , form, function(req, res){
 });
 
 // 删除产品类别
-app.del('/:id',yz,function(req,res){
+app.del('/:id',function(req,res){
     ProductType.remove(new ObjectID(req.params.id),function(){
         res.redirect('/producttype');    
     });
