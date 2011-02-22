@@ -1,0 +1,12 @@
+<div id="navbar">
+    <a href="/">首页</a>
+     -> 
+    <a href="/photofolder">相册</a>
+     ->
+    <%=photofolder.name%>
+    
+</div>
+<div>
+    <%=photofolder.name%>
+    <img src="/photofolder/img/<%=photofolder.smallimg.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
+</div>

@@ -1,0 +1,85 @@
+<div id="navbar">
+    <a href="/">首页</a>
+     -> 文章
+
+</div>
+<div id="docmodule">
+<ul>
+	<% for(var o in zxdocs){ %>
+		<li>
+		<a href="/doc/<%= zxdocs[o]._id %>">
+		<img src="/doc/img/<%=zxdocs[o].img.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
+		</a>
+		    <% if(logined){ %>
+		    <a class="open_edit_doc_dialog_link" href="#" url="/doc/<%= zxdocs[o]._id %>/edit">更新</a>  
+		    <form method='post' class="del_doc" action='/doc/<%= zxdocs[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		    <% } %>
+		</li>
+	<% } %>
+</ul>
+
+<a class="pagenum" href="#" url="/doc?page=<%= pageinfo.prevpage%>">prev</a>  
+<% for(var k in pageinfo.pages){ %>
+    <a class="pagenum" href="#" url="/doc?page=<%= pageinfo.pages[k]%>"><%= pageinfo.pages[k]%></a> 
+<% } %>
+
+<a class="pagenum" href="#" url="/doc?page=<%= pageinfo.nextpage%>" >next</a>
+<% if(logined){ %>
+<a href='#' id="open_add_doc_dialog_link" >添加</a>
+<% } %>
+</div>
+
+<hr/>
+
+<ul>
+	<% for(var o in bestdocs){ %>
+		<li>
+		<img src="/doc/img/<%=bestdocs[o].img.path%>" width='120' height='120'/>
+		
+		    <a href="/doc/<%= bestdocs[o]._id %>/edit">更新</a>  
+		    <form method='post' class="del_doc" action='/doc/<%= bestdocs[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		</li>
+	<% } %>
+</ul>
+
+<script>
+    
+    $("#open_add_doc_dialog_link").click(function(){
+        $.get("/doc/new",function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+    
+    $(".open_edit_doc_dialog_link").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+
+
+    $(".del_doc").ajaxForm(function(data){
+          if("success" == data){
+            $.get("/doc",function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });
+          }
+    });
+    
+    $(".pagenum").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+            $("#content").html(data);
+        });
+    });
+    
+</script>

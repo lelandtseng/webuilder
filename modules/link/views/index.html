@@ -1,0 +1,56 @@
+<div id="navbar">
+    <a href="/">首页</a>
+     -> 友情链接
+
+</div>
+<div id="linkmodule">
+<ul>
+	<% for(var o in links){ %>
+		<li>
+		<a href="/link/<%= links[o]._id %>">
+		<%= links[o].name %>
+		<img src="/link/img/<%=links[o].smallimg.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
+		</a>
+		    <% if(logined){ %>
+		    <a class="open_edit_link_dialog_link" href="#" url="/link/<%= links[o]._id %>/edit">更新</a>  
+		    <form method='post' class="del_link" action='/link/<%= links[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		    <% } %>
+		</li>
+	<% } %>
+</ul>
+<% if(logined){ %>
+<a href='#' id="open_add_link_dialog_link" >添加</a>
+<% } %>
+</div>
+
+<script>
+    
+    $("#open_add_link_dialog_link").click(function(){
+        $.get("/link/new",function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+    
+    $(".open_edit_link_dialog_link").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+
+
+    $(".del_link").ajaxForm(function(data){
+          if("success" == data){
+            $.get("/link",function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });
+          }
+    });
+    
+</script>

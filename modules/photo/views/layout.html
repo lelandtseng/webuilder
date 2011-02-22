@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset='utf-8' />        
+        <script src='http://code.jquery.com/jquery-1.4.4.min.js'>
+        </script>
+        <script src='https://github.com/malsup/form/raw/master/jquery.form.js?v2.43'>
+        </script>
+        <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/jquery-ui.min.js'>
+        </script> 
+        <link rel="stylesheet" 
+            href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/start/jquery-ui.css"
+            type="text/css" />
+        <link rel="stylesheet" href="/share.css" type="text/css" />
+        <script src="/share.js"></script>
+        
+    <style>
+	    #effect { padding: 0.4em; position: relative; margin:5px;}
+	    #effect h3 { margin: 0; padding: 0.4em; text-align: center; }
+	</style>
+
+    </head>
+    <body>
+    </div>
+        <div id='page'>
+            <div id='container' class="ui-widget ui-widget-content  ui-corner-all">
+                <div id='header' class="ui-widget ui-widget-content">
+                    <div id='logo'></div>
+                    <div id='nav'></div>
+                </div>
+                <div id="producttype">                    
+                </div>
+                <div id="content">
+                  <%-body%>
+                </div>
+                <div id="footer" class="ui-widget ui-widget-content">
+                  AAA | BBB | CCC | DDD | EEE 
+                </div>
+            </div>
+        </div>
+        <div id="dialog"></div>
+    </body>
+</html>
+<script>
+    $.get('/producttype',function(data){
+        $('#producttype').html(data);
+    });
+</script>

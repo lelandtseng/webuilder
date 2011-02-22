@@ -1,0 +1,85 @@
+<div id="navbar">
+    <a href="/">首页</a>
+     -> 图片
+
+</div>
+<div id="photomodule">
+<ul>
+	<% for(var o in zxphotos){ %>
+		<li>
+		<a href="/photo/<%= zxphotos[o]._id %>">
+		<img src="/photo/img/<%=zxphotos[o].img.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
+		</a>
+		    <% if(logined){ %>
+		    <a class="open_edit_photo_dialog_link" href="#" url="/photo/<%= zxphotos[o]._id %>/edit">更新</a>  
+		    <form method='post' class="del_photo" action='/photo/<%= zxphotos[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		    <% } %>
+		</li>
+	<% } %>
+</ul>
+
+<a class="pagenum" href="#" url="/photo?page=<%= pageinfo.prevpage%>">prev</a>  
+<% for(var k in pageinfo.pages){ %>
+    <a class="pagenum" href="#" url="/photo?page=<%= pageinfo.pages[k]%>"><%= pageinfo.pages[k]%></a> 
+<% } %>
+
+<a class="pagenum" href="#" url="/photo?page=<%= pageinfo.nextpage%>" >next</a>
+<% if(logined){ %>
+<a href='#' id="open_add_photo_dialog_link" >添加</a>
+<% } %>
+</div>
+
+<hr/>
+
+<ul>
+	<% for(var o in bestphotos){ %>
+		<li>
+		<img src="/photo/img/<%=bestphotos[o].img.path%>" width='120' height='120'/>
+		
+		    <a href="/photo/<%= bestphotos[o]._id %>/edit">更新</a>  
+		    <form method='post' class="del_photo" action='/photo/<%= bestphotos[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		</li>
+	<% } %>
+</ul>
+
+<script>
+    
+    $("#open_add_photo_dialog_link").click(function(){
+        $.get("/photo/new",function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+    
+    $(".open_edit_photo_dialog_link").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+
+
+    $(".del_photo").ajaxForm(function(data){
+          if("success" == data){
+            $.get("/photo",function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });
+          }
+    });
+    
+    $(".pagenum").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+            $("#content").html(data);
+        });
+    });
+    
+</script>

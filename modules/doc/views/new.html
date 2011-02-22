@@ -1,0 +1,72 @@
+<ul>
+    <% for(var k in errmsg){ %>
+        <li><%=errmsg[k]%></li>
+    <% } %>
+</ul>
+<div>
+<form method='post' enctype="multipart/form-data" id="add_doc_form" action='/doc/create'>
+    <fieldset>
+    <legend>添加文章</legend>
+    <label for='doc_name'>
+        文章名称
+    </label>
+    <input id='doc_name' type='text' value='<%- doc?(doc.name?doc.name:"") : "" %>' name='name' />
+    <label for='doc_price'>
+        文章价格
+    </label>
+    <input id='doc_price' value='<%- doc?(doc.price?doc.price:"") : "" %>' type='text' name='price' />
+    <label for='doc_des'>
+        文章描述
+    </label>
+    <textarea id='doc_des' name='des'><%- doc?(doc.des?doc.des:"") : "" %></textarea>
+    <label for='doc_img'>
+        文章图片
+    </label>
+    <input id='doc_img' type='file' name='img' />
+    <label for="doc_type">文章类别</label>
+    <select id="doc_type" name="type">
+        <% if(doc.type){ %>
+            <option value="<%=doc.type %>"><%=doc.type %></option>
+        <% } %>
+        <% for(var k in types){ %>
+            <option value="<%=types[k].name %>"><%=types[k].name %></option>
+        <% } %>
+    </select>
+    <label for="doc_best">推荐文章</label>
+    <select id="doc_best" name="best">
+        <% if(doc.best){ %>
+        <option value="true">推荐</option>
+        <option value="false">不推荐</option>
+        <% }else{ %>
+        <option value="false">不推荐</option>
+        <option value="true">推荐</option>
+        <% } %>
+    </select>
+    <label for="doc_validatnum">
+        验证码<%= validatnum.first %> + <%= validatnum.second %>
+    </label>
+    <input id='doc_validatnum' type='text' name='validatnum' />
+    <input type='submit' value='添加文章' />
+    </fieldset>
+</form>
+</div>
+
+<style>
+    input , textarea ,select{
+        display : block;
+    }
+</style>
+
+<script>
+    $("#add_doc_form").ajaxForm(function(data){
+           if("success" == data){
+            $.get("/doc",function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });    
+           }else{
+            $("#dialog").html(data);
+            $("#dialog").dialog('open');
+           }
+    });
+</script>

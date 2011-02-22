@@ -1,0 +1,17 @@
+<div id="navbar">
+    <a href="/">首页</a>
+     -> 
+    <a href="/photo">产品</a>
+     ->
+     <%=typename%>
+     
+</div>
+<div>
+    <ul>
+	<% for(var o in photos){ %>
+		<li>
+		    <%=photos[o].name%>
+		</li>
+	<% } %>
+</ul>
+</div>

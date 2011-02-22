@@ -1,0 +1,54 @@
+<ul>
+    <% for(var k in errmsg){ %>
+        <li><%=errmsg[k]%></li>
+    <% } %>
+</ul>
+<form method='post' enctype="multipart/form-data" id="edit_link_form" action='/link/<%= link._id %>/update'>
+    <fieldset>
+    <legend>更改友情链接</legend>
+    <label for='link_name'>
+        友情链接名称
+    </label>
+    <input id='link_name' type='text' name='name' value='<%=link.name%>' />
+    <label for='link_small_img'>
+        友情链接小图
+        <img src="/link/img/<%=link.smallimg.path%>" width='120' height='120'/>
+    </label>
+    <input id='link_small_img' type='file' name='smallimg' />
+    <label for='link_big_img'>
+        友情链接大图
+        <img src="/link/img/<%=link.bigimg.path%>" width='120' height='120'/>
+    </label>
+    <input id='link_big_img' type='file' name='bigimg' />
+    <label for="link_type">产品类别</label>
+    <select id="link_type" name="type">
+        <option value="<%=link.type%>"><%=link.type%></option>
+        <option value="abc">aaa</option>
+        <option value="abc">bbb</option>
+    </select>
+    <label for="link_validatnum">
+        验证码<%= validatnum.first %> + <%= validatnum.second %>
+    </label>
+    <input id='link_validatnum' type='text' name='validatnum' />
+    <input type='submit' value='更改友情链接' />
+    </fieldset>
+</form>
+<style>
+    input , textarea ,select{
+        display : block;
+    }
+</style>
+
+<script>
+    $("#edit_link_form").ajaxForm(function(data){
+           if("success" == data){
+            $.get("/link?"+new Date().getTime(),function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });    
+           }else{
+            $("#dialog").html(data);
+            $("#dialog").dialog('open');
+           }
+    });
+</script>

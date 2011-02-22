@@ -1,0 +1,56 @@
+<div id="navbar">
+    <a href="/">首页</a>
+     -> 招聘
+
+</div>
+<div id="jobmodule">
+<ul>
+	<% for(var o in jobs){ %>
+		<li>
+		<a href="/job/<%= jobs[o]._id %>">
+		<%= jobs[o].name %>
+		<img src="/job/img/<%=jobs[o].smallimg.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
+		</a>
+		    <% if(logined){ %>
+		    <a class="open_edit_job_dialog_link" href="#" url="/job/<%= jobs[o]._id %>/edit">更新</a>  
+		    <form method='post' class="del_job" action='/job/<%= jobs[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		    <% } %>
+		</li>
+	<% } %>
+</ul>
+<% if(logined){ %>
+<a href='#' id="open_add_job_dialog_link" >添加</a>
+<% } %>
+</div>
+
+<script>
+    
+    $("#open_add_job_dialog_link").click(function(){
+        $.get("/job/new",function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+    
+    $(".open_edit_job_dialog_link").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+
+
+    $(".del_job").ajaxForm(function(data){
+          if("success" == data){
+            $.get("/job",function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });
+          }
+    });
+    
+</script>

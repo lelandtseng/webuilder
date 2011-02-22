@@ -1,0 +1,56 @@
+<div id="navbar">
+    <a href="/">首页</a>
+     -> 相册
+
+</div>
+<div id="photofoldermodule">
+<ul>
+	<% for(var o in photofolders){ %>
+		<li>
+		<a href="/photofolder/<%= photofolders[o]._id %>">
+		<%= photofolders[o].name %>
+		<img src="/photofolder/img/<%=photofolders[o].smallimg.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
+		</a>
+		    <% if(logined){ %>
+		    <a class="open_edit_photofolder_dialog_link" href="#" url="/photofolder/<%= photofolders[o]._id %>/edit">更新</a>  
+		    <form method='post' class="del_photofolder" action='/photofolder/<%= photofolders[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		    <% } %>
+		</li>
+	<% } %>
+</ul>
+<% if(logined){ %>
+<a href='#' id="open_add_photofolder_dialog_link" >添加</a>
+<% } %>
+</div>
+
+<script>
+    
+    $("#open_add_photofolder_dialog_link").click(function(){
+        $.get("/photofolder/new",function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+    
+    $(".open_edit_photofolder_dialog_link").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+
+
+    $(".del_photofolder").ajaxForm(function(data){
+          if("success" == data){
+            $.get("/photofolder",function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });
+          }
+    });
+    
+</script>

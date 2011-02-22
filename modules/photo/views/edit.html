@@ -1,0 +1,68 @@
+<ul>
+    <% for(var k in errmsg){ %>
+        <li><%=errmsg[k]%></li>
+    <% } %>
+</ul>
+<form method='post' enctype="multipart/form-data" id="edit_photo_form" action='/photo/<%= photo._id %>/update'>
+    <fieldset>
+    <legend>更改图片</legend>
+    <label for='photo_name'>
+        图片名称
+    </label>
+    <input id='photo_name' type='text' name='name' value='<%=photo.name%>' />
+    <label for='photo_price'>
+        图片价格
+    </label>
+    <input id='photo_price' type='text' name='price' value='<%=photo.price%>' />
+    <label for='photo_des'>
+        图片描述
+    </label>
+    <textarea id='photo_des' name='des'><%=photo.des%></textarea>
+    <label for='photo_img'>
+        图片图片
+        <img src="/photo/img/<%=photo.img.path%>" width='120' height='120'/>
+    </label>
+    <input id='photo_img' type='file' name='img' />
+    <label for="photo_type">图片类别</label>
+    <select id="photo_type" name="type">
+        <option value="<%=photo.type%>"><%=photo.type%></option>
+        <% for(var k in types){ %>
+            <option value="<%=types[k].name %>"><%=types[k].name %></option>
+        <% } %>
+    </select>
+    <label for="photo_best">推荐图片</label>
+    <select id="photo_best" name="best">
+        <% if(photo.best){ %>
+        <option value="true">推荐</option>
+        <option value="false">不推荐</option>
+        <% }else{ %>
+        <option value="false">不推荐</option>
+        <option value="true">推荐</option>
+        <% } %>
+    </select>
+    <label for="photo_validatnum">
+        验证码<%= validatnum.first %> + <%= validatnum.second %>
+    </label>
+    <input id='photo_validatnum' type='text' name='validatnum' />
+    <input type='submit' value='更改图片' />
+    </fieldset>
+</form>
+<style>
+    input , textarea ,select{
+        display : block;
+    }
+</style>
+
+<script>
+    $("#edit_photo_form").ajaxForm(function(data){
+           if("success" == data){
+            $.get("/photo?"+new Date().getTime(),function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });    
+           }else{
+            $("#dialog").html(data);
+            $("#dialog").dialog('open');
+           }
+    });
+</script>

@@ -1,0 +1,13 @@
+<ul>
+	<% for(var o in types){ %>
+		<li><a href="/doc/type/<%=types[o].name%>"><%= types[o].name %></a>
+		    <% if(editable){ %> 
+		    <form method='post' action='/doctype/<%= types[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		    <% } %>
+		</li>
+	<% } %>
+</ul>
+
