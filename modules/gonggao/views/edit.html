@@ -1,0 +1,28 @@
+<ul>
+    <% for(var k in errmsg){ %>
+        <li><%=errmsg[k]%></li>
+    <% } %>
+</ul>
+<form method='post' enctype="multipart/form-data" id="edit_gonggao_form" action='/gonggao/<%= gonggao._id %>/update'>
+    <fieldset>
+    <legend>更改公告</legend>
+    <label for='gonggao_content'>
+        公告名称
+    </label>
+    <textarea name="content"><%=gonggao.content?gonggao.content:""%></textarea>
+    <input type="submit" value="更新"/>
+</form>
+
+<script>
+    $("#edit_gonggao_form").ajaxForm(function(data){
+           if("success" == data){
+            $.get("/gonggao?"+new Date().getTime(),function(data){
+                $("#content").html(data);
+                $("#dialog").dialog('close');
+            });    
+           }else{
+            $("#dialog").html(data);
+            $("#dialog").dialog('open');
+           }
+    });
+</script>

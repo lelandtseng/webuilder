@@ -17,5 +17,8 @@ app.use('/doctype',require('./modules/doctype'));
 app.use('/doc',require('./modules/doc'));
 app.use('/job',require('./modules/job'));
 app.use('/link',require('./modules/link'));
+app.use('/gonggao',require('./modules/gonggao'));
+app.use('/contact',require('./modules/contact'));
+app.use('/about',require('./modules/about'));
 app.listen(3000);
 

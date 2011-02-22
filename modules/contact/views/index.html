@@ -1,0 +1,16 @@
+<div id="contactmodule">
+<%= contact.content?contact.content:"" %>
+<% if(logined){ %>
+<a class="open_edit_contact_dialog_link" href="#" url="/contact/<%= contact._id %>/edit">更新</a>
+<% } %>
+</div>
+
+<script>
+    $(".open_edit_contact_dialog_link").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+</script>
