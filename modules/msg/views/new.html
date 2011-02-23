@@ -14,7 +14,7 @@
     <label for='msg_des'>
         留言内容
     </label>
-    <textarea id='msg_context' name='context'><%- msg?(msg.context?msg.cpntext:"") : "" %></textarea>
+    <textarea id='msg_context' name='content'><%- msg?(msg.content?msg.content:"") : "" %></textarea>
     <label for="msg_validatnum">
         验证码<%= validatnum.first %> + <%= validatnum.second %>
     </label>
@@ -34,6 +34,10 @@
     $("#add_msg_form").ajaxForm(function(data){
            if("success" == data){
             alert("留言成功！");
+            $.get("/msg",function(data){
+                $("#content").html(data);
+            });
+            
            }else{
             $("#write_msg").html(data);
            }

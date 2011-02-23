@@ -84,7 +84,7 @@ app.post('/create',form, function(req, res){
 });
 
 // 删除产品
-app.del('/:id',yz,function(req,res){
+app.del('/:id', function(req,res){
     msg.remove(new ObjectID(req.params.id),function(){
         res.send("success");
     });

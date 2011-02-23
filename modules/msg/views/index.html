@@ -40,6 +40,7 @@
    });
     
     $(".del_msg").ajaxForm(function(data){
+         
           if("success" == data){
             $.get("/msg",function(data){
                 $("#content").html(data);
@@ -52,18 +53,6 @@
         $.get(linkurl,function(data){
             $("#content").html(data);
         });
-    });
-
-    $("#add_msg_form").ajaxForm(function(data){
-           if("success" == data){
-            $.get("/doc",function(data){
-               $("#content").html(data);
-               $("#dialog").dialog('close');
-            });    
-           }else{
-               $("#dialog").html(data);
-               $("#dialog").dialog('open');
-           }
     });
     
 </script>
