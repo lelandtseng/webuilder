@@ -1,0 +1,69 @@
+<div id="navbar">
+    <a href="/">首页</a>
+     -> 留言
+
+</div>
+<% if(logined){ %>
+<div id="msgmodule">
+<ul>
+	<% for(var o in msgs){ %>
+		<li>
+		<a href="/msg/<%= msgs[o]._id %>">
+		    <%=msgs[o].content%><hr>
+		</a>
+		    <% if(logined){ %>
+		    <form method='post' class="del_msg" action='/msg/<%= msgs[o]._id %>'>
+		        <input type='hidden' name='_method' value='delete' />
+		        <input type='submit' value='删除' />
+		    </form>
+		    <% } %>
+		</li>
+	<% } %>
+</ul>
+
+<a class="pagenum" href="#" url="/msg?page=<%= pageinfo.prevpage%>">prev</a>  
+<% for(var k in pageinfo.pages){ %>
+    <a class="pagenum" href="#" url="/msg?page=<%= pageinfo.pages[k]%>"><%= pageinfo.pages[k]%></a> 
+<% } %>
+
+<a class="pagenum" href="#" url="/msg?page=<%= pageinfo.nextpage%>" >next</a>
+</div>
+<div id="write_msg"></div>
+
+
+<% } %>
+
+<script>
+    
+   $.get("/msg/new",function(data){
+       $("#write_msg").html(data);
+   });
+    
+    $(".del_msg").ajaxForm(function(data){
+          if("success" == data){
+            $.get("/msg",function(data){
+                $("#content").html(data);
+            });
+          }
+    });
+    
+    $(".pagenum").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+            $("#content").html(data);
+        });
+    });
+
+    $("#add_msg_form").ajaxForm(function(data){
+           if("success" == data){
+            $.get("/doc",function(data){
+               $("#content").html(data);
+               $("#dialog").dialog('close');
+            });    
+           }else{
+               $("#dialog").html(data);
+               $("#dialog").dialog('open');
+           }
+    });
+    
+</script>

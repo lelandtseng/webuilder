@@ -20,5 +20,6 @@ app.use('/link',require('./modules/link'));
 app.use('/gonggao',require('./modules/gonggao'));
 app.use('/contact',require('./modules/contact'));
 app.use('/about',require('./modules/about'));
+app.use('/msg',require('./modules/msg'));
 app.listen(3000);
 

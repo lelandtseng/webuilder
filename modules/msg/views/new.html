@@ -1,0 +1,41 @@
+<ul>
+    <% for(var k in errmsg){ %>
+        <li><%=errmsg[k]%></li>
+    <% } %>
+</ul>
+<div>
+<form method='post' enctype="multipart/form-data" id="add_msg_form" action='/msg/create'>
+    <fieldset>
+    <legend>留言</legend>
+    <label for='msg_title'>
+        留言标题
+    </label>
+    <input id='msg_title' value='<%- msg?(msg.title?msg.title:"") : "" %>' type='text' name='title' />
+    <label for='msg_des'>
+        留言内容
+    </label>
+    <textarea id='msg_context' name='context'><%- msg?(msg.context?msg.cpntext:"") : "" %></textarea>
+    <label for="msg_validatnum">
+        验证码<%= validatnum.first %> + <%= validatnum.second %>
+    </label>
+    <input id='msg_validatnum' type='text' name='validatnum' />
+    <input type='submit' value='添加留言' />
+    </fieldset>
+</form>
+</div>
+
+<style>
+    input , textarea ,select{
+        display : block;
+    }
+</style>
+
+<script>
+    $("#add_msg_form").ajaxForm(function(data){
+           if("success" == data){
+            alert("留言成功！");
+           }else{
+            $("#write_msg").html(data);
+           }
+    });
+</script>
