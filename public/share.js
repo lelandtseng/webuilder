@@ -77,5 +77,4 @@ $.get('/nav',function(data){
     $("#nav").html(data);
 });
 
-
 })

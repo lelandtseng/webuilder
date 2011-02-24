@@ -22,6 +22,7 @@
     </head>
     <body>
     </div>
+        <div id="toolbar"></div>
         <div id='page'>
             <div id='container' class="ui-widget ui-widget-content  ui-corner-all">
                 <div id='header' class="ui-widget ui-widget-content">
@@ -40,3 +41,6 @@
         <div id="dialog"></div>
     </body>
 </html>
+<script>
+    $.get("/toolbar",function(data){$('#toolbar').html(data);});
+</script>

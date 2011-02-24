@@ -29,6 +29,12 @@ app.get('/nav',function(req,res){
     res.render("nav.html",{layout:false});
 });
 
+// toolbar
+app.get('/toolbar',function(req,res){
+    req.session.loginuser?res.render("toolbar.html",{layout:false}):res.send("");
+});
+
+
 //保存网站状态
 app.post('/savestate',function(req,res){
     req.body.user = req.session.loginuser.loginname;
