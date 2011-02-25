@@ -140,3 +140,28 @@
     });
     })
     </script>
+    <div id="modules">
+        <ul>
+            <li modulelink="/gonggao">公告模块</li>
+            <li modulelink="/link">友情链接模块</li>
+            <li modulelink="/contact">联系方式模块</li>
+            <li modulelink="/product/newproduct">最新产品展示模块</li>
+            <li modulelink="/product/bestproduct">推荐产品展示模块</li>
+            <li modulelink="/producttype">产品类别模块</li>
+            <li modulelink="/job">招聘模块</li>
+            <li moudlelink="/about">关于我们模块</li>
+            <li modulelink="/msg">留言模块</li>
+            <li modulelink="/doctype">文章类别模块</li>
+            <li modulelink="/doc">文章模块</li>
+            <li modulelink="/photo">相册模块</li>
+            <li modulelink="/phototype">相册类别模块</li>
+        </ul>
+    </div>
+    <script>
+        $("li[modulelink]").click(function(){
+            var url = $(this).attr('modulelink');
+            $.get(url,function(data){
+                $("#center").html(data);
+            });
+        });
+    </script>
