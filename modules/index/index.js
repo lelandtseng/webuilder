@@ -6,8 +6,15 @@ app.register('.html', require('ejs'));
 var FormData = require("form-data");
 var form = new FormData();
 var Model = require('mongo-model').Model;
+var ObjectID = require('mongo-model').ObjectID;
 var SiteState = new Model("sitestate");
-var Logo = new Model("logo","/home/leland/tmp");
+var Logo = new Model("logo","/home/lelandtseng/tmp");
+
+function username(req,res,next){
+    req.username = "abc";
+    next();
+}
+
 function state(req,res,next){
     SiteState.find({user:req.session.loginuser?req.session.loginuser.loginname:null},{},function(data)
     {
@@ -41,15 +48,16 @@ app.get('/toolbar',function(req,res){
 
 
 //保存网站状态
-app.post('/savestate',function(req,res){
+app.post('/savestate',yz,function(req,res){
     req.body.user = req.session.loginuser.loginname;
     
-    SiteState.find({user:req.session.loginuser.loginname},{},function(data){
-        if(data[0]){
-        SiteState.update(data[0]._id,req.body,function(){
+    SiteState.get(req.session.loginuser.loginname,function(data){
+        if(data){
+        SiteState.update(data._id,req.body,function(){
             res.send("ok!");
         });
         }else{
+        req.body._id = req.session.loginuser.loginname;
         SiteState.save(req.body,function(){
             res.send("ok2!");
         });
@@ -57,15 +65,26 @@ app.post('/savestate',function(req,res){
     });
 });
 
+// 得到网站状态
+app.get("/state",username,function(req,res){
+    SiteState.get(req.username,function(data){
+        if(data){
+           res.send(JSON.stringify(data));
+        }else{
+            res.send("{}");
+        }
+    });
+});
+
 // logo update
 app.post("/logo/update",yz,form.build(),function(req,res){
-    Logo.find({user:req.session.loginuser.loginname},{},function(data){
+    Logo.find({_id:req.session.loginuser.loginname},{},function(data){
         if(data[0]){
             Logo.update(data[0]._id,req.formdata,function(){
                 res.send("success");
             });
         }else{
-            req.formdata._id = new ObjectID(req.session.loginuser.loginname);
+            req.formdata._id = req.session.loginuser.loginname;
             Logo.save(req.formdata,function(){
                 res.send("success");
             });
@@ -74,11 +93,10 @@ app.post("/logo/update",yz,form.build(),function(req,res){
 });
 
 // show logo
-app.get("/logo",function(req,res){
-    Logo.find({},{},function(data){
-        try{
-           
-            var path = '/home/leland/tmp/'+data[0].data.path; 
+app.get("/logo",username,function(req,res){
+    Logo.get(req.username,function(data){
+        try{           
+            var path = '/home/lelandtseng/tmp/'+data.data.path; 
             console.log(path);
             res.sendfile(path);
         }catch(e){

@@ -7,13 +7,6 @@ $('#show-logindialog-button').click(function(){
     });
 });
 
-$('#toolbar').tabs({
-	ajaxOptions:{}
-});
-
-$('.theme').click(function(o){
-	$($('link')[0]).attr('href',$(this).attr('theme'));							
-});
 
 $('.layout').click(function(){
 
@@ -42,33 +35,6 @@ $('.layout').click(function(){
 });
 				
 $('#nav').draggable({containment:'#page' });
-
-function savestate(){
-    var theme = $($('link')[0]).attr('href');
-    var leftcss = $('#left').attr('style');	
-    var cententcss = $('#centent').attr('style');	
-    var rightcss = $('#right').attr('style');
-    var headerlength = $('#header').css('height');
-    var logosize = $('#logo').css('height');
-    var navtop = $('#nav').css('top');
-    var navleft = $('#nav').css('left');
-    $.post("/savestate",{
-        theme:theme,
-        leftcss:leftcss,
-        cententcss:cententcss,
-        rightcss:rightcss,
-        headerlength:headerlength,
-        logosize:logosize,
-        navtop:navtop,
-        navleft:navleft
-        },function(data){
-        alert(data);
-    }); 
-}
-
-$('#show-toolbar-button').click(function(){
-    savestate();
-});
 
 $("#dialog").dialog({ autoOpen: false ,model:true});
 

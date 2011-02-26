@@ -1,4 +1,5 @@
 <div id='toolbar'>
+<button id="savestate">保存网站状态</button>
     <ul>
         <li><a href='#_theme'>色调</a></li>
         <li><a href='#layout'>布局</a></li>
@@ -38,13 +39,15 @@
         <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/pepper-grinder/jquery-ui.css'>
         <img src='/theme_90_pepper_grinder.png'/>
         </div>
-        <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/le-frog/jquery-ui.css'>
-        <img src='/theme_90_le-frog_menu.png' />
-        </div>
         <div style='clear:both'>
         </div>
     </div>
-    
+    <style>
+        .theme{
+            float:left;
+            margin:5px;
+        }
+    </style>
     <div id='layout'>
         <div class='layout' layout='25:75'>1:3</div>
         <div class='layout' layout='20:60:20'>1:3:1</div>
@@ -139,12 +142,12 @@
             $('#logo').css('display', 'block');
             $("#logo").attr("src","/logo?"+new Date().getTime());
         });
-        $('#logo-hide-                                                                                                                                                                                                                                                                                       image').click(function(){
+        $('#logo-hide-image').click(function(){
             $('#logo').css('display', 'none');
         });
         $('#update_logo_form').ajaxForm(function(data){
             if("success" === data){
-                $("#logo").attr("src","/logo?"+new Date().getTime());
+                $("#logo").attr("src","/logo?dddddd"+new Date().getTime());
             }else{
                 alert("logo errer!");
             }
@@ -169,10 +172,46 @@
         </ul>
     </div>
     <script>
-        $("li[modulelink]").click(function(){
+    $("li[modulelink]").click(function(){
             var url = $(this).attr('modulelink');
             $.get(url,function(data){
                 $("#center").html(data);
             });
-        });
+    });
+        
+    $('#toolbar').tabs({
+	        ajaxOptions:{}
+    });
+
+    $('.theme').click(function(o){
+	    $($('link')[0]).attr('href',$(this).attr('theme'));							
+    });
+    
+    function savestate(){
+    var theme = $($('link')[0]).attr('href');
+    var leftcss = $('#left').attr('style');	
+    var cententcss = $('#centent').attr('style');	
+    var rightcss = $('#right').attr('style');
+    var headerlength = $('#header').css('height');
+    var logosize = $('#logo').css('height');
+    var navtop = $('#nav').css('top');
+    var navleft = $('#nav').css('left');
+    $.post("/savestate",{
+        theme:theme,
+        leftcss:leftcss,
+        cententcss:cententcss,
+        rightcss:rightcss,
+        headerlength:headerlength,
+        logosize:logosize,
+        navtop:navtop,
+        navleft:navleft
+        },function(data){
+        alert(data);
+    }); 
+}
+
+$('#savestate').click(function(){
+    savestate();
+});
+
     </script>
