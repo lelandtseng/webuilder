@@ -77,4 +77,6 @@ $.get('/nav',function(data){
     $("#nav").html(data);
 });
 
+// 显示logo
+$("#logo").css("background-image","url(/logo?"+new Date().getTime()+")");
 })

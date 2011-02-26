@@ -114,7 +114,10 @@
     })
     </script>
     <div id='logoc'>
-        <div id='logo-slide'></div>
+            <form method='post' enctype="multipart/form-data" id="update_logo_form" action='/logo/update'>
+                <input type='file' name='data' /><input type='submit' />
+            </form>
+            <div id='logo-slide'></div>
             <button id='logo-show-image'>显示Logo</button>
             <button id='logo-hide-image'>隐藏Logo</button>
         </div>
@@ -122,22 +125,30 @@
     </div>
     <script>
     $(function(){
-    $('#logo-slide').slider({
-        value: 30,
-        min: 30,
-        max: 150,
-        step: 5,
-        slide: function(event, ui){
-        $('#logo').css('height', ui.value + 'px');
-        $('#logo').css('width', ui.value + 'px');
-        }
-    });
-    $('#logo-show-image').click(function(){
-        $('#logo').css('background', 'url(http://www.google.com.hk/intl/zh-CN/images/logo_cn.png)');
-    });
-    $('#logo-hide-image').click(function(){
-        $('#logo').css('background', 'none');
-    });
+        $('#logo-slide').slider({
+            value: 30,
+            min: 30,
+            max: 150,
+            step: 5,
+            slide: function(event, ui){
+            $('#logo').css('height', ui.value + 'px');
+            $('#logo').css('width', ui.value + 'px');
+            }
+        });
+        $('#logo-show-image').click(function(){
+            $('#logo').css('display', 'block');
+            $("#logo").attr("src","/logo?"+new Date().getTime());
+        });
+        $('#logo-hide-                                                                                                                                                                                                                                                                                       image').click(function(){
+            $('#logo').css('display', 'none');
+        });
+        $('#update_logo_form').ajaxForm(function(data){
+            if("success" === data){
+                $("#logo").attr("src","/logo?"+new Date().getTime());
+            }else{
+                alert("logo errer!");
+            }
+        });
     })
     </script>
     <div id="modules">
