@@ -53,6 +53,33 @@
         <div class='layout' layout='20:60:20'>1:3:1</div>
     </div>
     <script>
+
+    $('.layout').click(function(){
+
+        var layout = $(this).attr('layout');
+        var num = layout.split(':');	
+        if(num.length==2){$('#right').hide();
+        var bb = num[0]+'%';
+        var bb2 = num[1]+'%'
+        $('#left').css('width',bb);
+        $('#center').css('width',bb2);
+        }
+        else{
+        var bb = num[0]+'%'
+        var bb2 = num[1]+'%'
+        var bb3 = num[2]+'%'
+        $('#left').css('width',bb);
+        $('#center').css('width',bb2);
+        $('#right').show();
+        $('#right').css('width',bb3);
+        }
+
+        $('#left,#centent,#right').sortable({
+        connectWith: ".connectedSortable"
+        }).disableSelection();
+        
+    });
+    
     $(function(){
         $('#show-bg').click(function(){
             $('body').css('background-image', 'url(http://isd.tencent.com/wp-content/themes/teamblog/img/job_2010.gif)');});
