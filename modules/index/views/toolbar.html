@@ -6,9 +6,36 @@
         <li><a href='#bg'>背景</a></li>
         <li><a href='#btl'>标题栏</a></li>
         <li><a href='#seo'>SEO搜索优化</a></li>
-        <li><a href='#logoc'>标识LOGO</a></li>
+        <li><a href='#logoco'>标识LOGO</a></li>
         <li><a href='#modules'>系统模块</a></li>
     </ul>
+    <div id="modules">
+        <ul>
+            <li modulelink="/gonggao">公告模块</li>
+            <li modulelink="/link">友情链接模块</li>
+            <li modulelink="/contact">联系方式模块</li>
+            <li modulelink="/product/newproduct">最新产品展示模块</li>
+            <li modulelink="/product/bestproduct">推荐产品展示模块</li>
+            <li modulelink="/producttype">产品类别模块</li>
+            <li modulelink="/job">招聘模块</li>
+            <li moudlelink="/about">关于我们模块</li>
+            <li modulelink="/msg">留言模块</li>
+            <li modulelink="/doctype">文章类别模块</li>
+            <li modulelink="/doc">文章模块</li>
+            <li modulelink="/photo">相册模块</li>
+            <li modulelink="/phototype">相册类别模块</li>
+        </ul>
+    </div>
+    <div id='logoco'>
+            <form method='post' enctype="multipart/form-data" id="update_logo_form" action='/logo/update'>
+                <input type='file' name='data' /><input type='submit' />
+            </form>
+            <div id='logo-slide'></div>
+            <button id='logo-show-image'>显示Logo</button>
+            <button id='logo-hide-image'>隐藏Logo</button>
+        </div>
+        <div style='clear:both'></div>
+    </div>
     <div id='_theme'>
         <div class='theme' theme='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.6/themes/ui-lightness/jquery-ui.css'>
         <img src='/theme_90_ui_light.png' />
@@ -181,16 +208,7 @@
         });
     })
     </script>
-    <div id='logoc'>
-            <form method='post' enctype="multipart/form-data" id="update_logo_form" action='/logo/update'>
-                <input type='file' name='data' /><input type='submit' />
-            </form>
-            <div id='logo-slide'></div>
-            <button id='logo-show-image'>显示Logo</button>
-            <button id='logo-hide-image'>隐藏Logo</button>
-        </div>
-        <div style='clear:both'></div>
-    </div>
+
     <script>
     $(function(){
         $('#logo-slide').slider({
@@ -219,23 +237,6 @@
         });
     })
     </script>
-    <div id="modules">
-        <ul>
-            <li modulelink="/gonggao">公告模块</li>
-            <li modulelink="/link">友情链接模块</li>
-            <li modulelink="/contact">联系方式模块</li>
-            <li modulelink="/product/newproduct">最新产品展示模块</li>
-            <li modulelink="/product/bestproduct">推荐产品展示模块</li>
-            <li modulelink="/producttype">产品类别模块</li>
-            <li modulelink="/job">招聘模块</li>
-            <li moudlelink="/about">关于我们模块</li>
-            <li modulelink="/msg">留言模块</li>
-            <li modulelink="/doctype">文章类别模块</li>
-            <li modulelink="/doc">文章模块</li>
-            <li modulelink="/photo">相册模块</li>
-            <li modulelink="/phototype">相册类别模块</li>
-        </ul>
-    </div>
     <script>
     $("li[modulelink]").click(function(){
             var url = $(this).attr('modulelink');
