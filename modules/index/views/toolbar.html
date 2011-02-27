@@ -5,6 +5,7 @@
         <li><a href='#layout'>布局</a></li>
         <li><a href='#bg'>背景</a></li>
         <li><a href='#btl'>标题栏</a></li>
+        <li><a href='#seo'>SEO搜索优化</a></li>
         <li><a href='#logoc'>标识LOGO</a></li>
         <li><a href='#modules'>系统模块</a></li>
     </ul>
@@ -79,10 +80,46 @@
         }).disableSelection();
         
     });
-    
+    </script>
+    <div id="seo">
+    <form method='post' id="update_seo_form" action='/seo/update'>
+        <textarea name="keywords"><i>test text</i></textarea>
+        <input type='submit' value="搜索优化"/>
+    </form>    
+    </div>
+    <script>
+        $('#update_seo_form').ajaxForm(function(data){
+            if("success" === data){
+                alert("SEO优化成功！");
+            }else{
+                alert("logo errer!");
+            }
+        });       
+    </script>
+    <div id='bg'>
+                <form method='post' enctype="multipart/form-data" id="update_bg_form" action='/bg/update'>
+                <input type='file' name='data' /><input type='submit' value="更改背景"/>
+            </form>
+        <button id='show-bg'>显示背景</button>
+        <button id='bg-pingpu'>平铺</button>
+        <button id='bg-nopingpu'>不平铺</button>
+        <button id='bg-zuoshang'>左上对齐</button>
+        <button id='bg-shang'>上居中对齐</button>
+        <button id='bg-youshang'>右上对齐</button>
+        <input type='radio' name='gp' id='bg-gundong'/>
+        <input type='radio' name='gp' id='bg-guding'/>
+    </div>
+    <script>
     $(function(){
+        $('#update_bg_form').ajaxForm(function(data){
+            if("success" === data){
+                $("body").css("background-image","url(/bg?"+new Date().getTime()+")");
+            }else{
+                alert("logo errer!");
+            }
+        });
         $('#show-bg').click(function(){
-            $('body').css('background-image', 'url(http://isd.tencent.com/wp-content/themes/teamblog/img/job_2010.gif)');});
+            $("body").css("background-image","url(/bg?"+new Date().getTime()+")");});
         $('#bg-gundong').click(function(){
             $('body').css('background-attachment', 'scroll')
         });
@@ -109,23 +146,24 @@
         });
     })
     </script>
-    <div id='bg'>
-        <button id='show-bg'>显示背景</button>
-        <button id='bg-pingpu'>平铺</button>
-        <button id='bg-nopingpu'>不平铺</button>
-        <button id='bg-zuoshang'>左上对齐</button>
-        <button id='bg-shang'>上居中对齐</button>
-        <button id='bg-youshang'>右上对齐</button>
-        <input type='radio' name='gp' id='bg-gundong'/>
-        <input type='radio' name='gp' id='bg-guding'/>
-    </div>
     <div id='btl'>
+        <div id='bg'>
+        <form method='post' enctype="multipart/form-data" id="update_banner_form" action='/banner/update'>
+                <input type='file' name='data' /><input type='submit' value="更改标题栏背景"/>
+        </form>
         <div id='slide'></div>
-        <button id='btl-show-image'>显示导航背景</button>
-        <button id='btl-hide-image'>隐藏导航背景</button>
+        <button id='btl-show-image'>显示标题栏背景</button>
+        <button id='btl-hide-image'>隐藏标题栏背景</button>
     </div>
     <script>
     $(function(){
+        $('#update_banner_form').ajaxForm(function(data){
+            if("success" === data){
+                $("#header").css("background-image","url(/banner?"+new Date().getTime()+")");
+            }else{
+                alert("banner errer!");
+            }
+        });
         $('#slide').slider({
             value: 80,
             min: 80,
@@ -136,7 +174,7 @@
             }
         });
         $('#btl-show-image').click(function(){
-            $('#header').css('background','url(http://www.google.com.hk/intl/zh-CN/images/logo_cn.png)');
+            $('#header').css('background','url(/banner?'+new Date().getTime()+')');
         });
         $('#btl-hide-image').click(function(){
             $('#header').css('background', 'none');
@@ -217,21 +255,23 @@
     function savestate(){
     var theme = $($('link')[0]).attr('href');
     var leftcss = $('#left').attr('style');	
-    var cententcss = $('#centent').attr('style');	
+    var centercss = $('#center').attr('style');	
     var rightcss = $('#right').attr('style');
-    var headerlength = $('#header').css('height');
+    var headercss = $('#header').attr('style');
     var logosize = $('#logo').css('height');
     var navtop = $('#nav').css('top');
     var navleft = $('#nav').css('left');
+    var bgcss = $("body").attr("style");
     $.post("/savestate",{
         theme:theme,
         leftcss:leftcss,
-        cententcss:cententcss,
+        centercss:centercss,
         rightcss:rightcss,
-        headerlength:headerlength,
+        headercss:headercss,
         logosize:logosize,
         navtop:navtop,
-        navleft:navleft
+        navleft:navleft,
+        bgcss:bgcss
         },function(data){
         alert(data);
     }); 

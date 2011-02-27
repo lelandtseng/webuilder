@@ -22,3 +22,5 @@ $.get('/nav',function(data){
 // 显示logo
 $("#logo").css("background-image","url(/logo?"+new Date().getTime()+")");
 })
+
+

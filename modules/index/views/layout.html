@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset='utf-8' />        
+        <meta charset='utf-8' />    
+        <meta name="keywords" content="<%=keywords%>" />    
         <script src='http://code.jquery.com/jquery-1.4.4.min.js'>
         </script>
         <script src='https://github.com/malsup/form/raw/master/jquery.form.js?v2.43'>
@@ -20,7 +21,6 @@
 	</style>
 
     </head>
-    <body>
     </div>
         <div id="toolbar"></div>
         <div id='page'>
@@ -46,5 +46,11 @@
         var state = eval('('+data+')');
         $($('link')[0]).attr('href',state.theme);
         $("#logo").css("width",state.logosize).css('height',state.logosize);
+        $("#left").attr("style",state.leftcss);
+        $("#center").attr("style",state.centercss);
+        $("#right").attr("style",state.rightcss);
+        $("body").attr("style",state.bgcss);
+        $("body").css("background-image","url(/bg?"+new Date().getTime()+")");
+        $("#header").attr("style",state.headercss);
     });
 </script>

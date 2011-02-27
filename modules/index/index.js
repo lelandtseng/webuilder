@@ -9,6 +9,9 @@ var Model = require('mongo-model').Model;
 var ObjectID = require('mongo-model').ObjectID;
 var SiteState = new Model("sitestate");
 var Logo = new Model("logo","/home/lelandtseng/tmp");
+var BG = new Model("bg","/home/lelandtseng/tmp");
+var banner = new Model("banner","/home/lelandtseng/tmp");
+var seo = new Model("seo");
 
 function username(req,res,next){
     req.username = "abc";
@@ -27,12 +30,23 @@ function yz(req,res,next){
     req.session.loginuser?next():res.send("");
 }
 
+function keywords(req,res,next){
+    seo.get(req.username,function(data){
+        if(data){
+        req.keywords = data.keywords;
+        next();
+        }else{
+            next();
+        }
+    });  
+}
+
 //打开首页
-app.get('/',state,function(req,res,next){
+app.get('/',username,keywords,function(req,res,next){
     res.render('index.html',
     {     
         loginuser:req.session.loginuser ? req.session.loginuser : false,
-        state:req.state
+        keywords:req.keywords
     });
 });
 
@@ -104,4 +118,79 @@ app.get("/logo",username,function(req,res){
         }
     });    
 });
+
+// BG update
+app.post("/bg/update",yz,form.build(),function(req,res){
+    BG.find({_id:req.session.loginuser.loginname},{},function(data){
+        if(data[0]){
+            BG.update(data[0]._id,req.formdata,function(){
+                res.send("success");
+            });
+        }else{
+            req.formdata._id = req.session.loginuser.loginname;
+            BG.save(req.formdata,function(){
+                res.send("success");
+            });
+        }
+    });
+});
+
+// BG logo
+app.get("/bg",username,function(req,res){
+    BG.get(req.username,function(data){
+        try{           
+            var path = '/home/lelandtseng/tmp/'+data.data.path; 
+            //console.log(path);
+            res.sendfile(path);
+        }catch(e){
+            res.send("");
+        }
+    });    
+});
+
+// banner update
+app.post("/banner/update",yz,form.build(),function(req,res){
+    banner.find({_id:req.session.loginuser.loginname},{},function(data){
+        if(data[0]){
+            banner.update(data[0]._id,req.formdata,function(){
+                res.send("success");
+            });
+        }else{
+            req.formdata._id = req.session.loginuser.loginname;
+            banner.save(req.formdata,function(){
+                res.send("success");
+            });
+        }
+    });
+});
+
+// banner logo
+app.get("/banner",username,function(req,res){
+    banner.get(req.username,function(data){
+        try{           
+            var path = '/home/lelandtseng/tmp/'+data.data.path; 
+            //console.log(path);
+            res.sendfile(path);
+        }catch(e){
+            res.send("");
+        }
+    });    
+});
+
+// seo update
+app.post("/seo/update",yz,form.build(),function(req,res){
+    seo.find({_id:req.session.loginuser.loginname},{},function(data){
+        if(data[0]){
+            seo.update(data[0]._id,req.formdata,function(){
+                res.send("success");
+            });
+        }else{
+            req.formdata._id = req.session.loginuser.loginname;
+            seo.save(req.formdata,function(){
+                res.send("success");
+            });
+        }
+    });
+});
+
 
