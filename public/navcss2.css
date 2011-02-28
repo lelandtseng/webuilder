@@ -1,0 +1,8 @@
+<style>
+/* 导航修饰 */
+#nav{clear:both;padding-top:1px;font:1em/2 "Helvetica Neue",Arial,Helvetica,sans-serif}
+#nav ul{float:left;width:100%;margin:0;padding:0;list-style:none;background:yellow url(/nav-tab.png) repeat-x}
+#nav li{display:inline;margin:0;padding:0}
+#nav a{display:block;float:left}
+</style>
+

@@ -12,7 +12,7 @@
     </ul>
     <div id="navc">
     
-        <ul>
+        <ul style="float:left;width:100%;margin:0;padding:0;list-style:none;">
            <li navlink="product" class="navlink product_navlink">产品</li>
            <li navlink="zhengshu" class="navlink zhengshu_navlink">证书</li>
            <li navlink="photo" class="navlink photo_navlink">相册</li>
@@ -22,8 +22,15 @@
            <li navlink="about" class="navlink about_navlink">关于我们</li>
            <li navlink="msg" class="navlink msg_navlink">留言</li>
         </ul>
-
-        <script>    
+        <hr/>
+        <button id="navcss1">样式1</button>
+        <button id="navcss2">样式2</button>
+        <script>  
+            $(".navlink")
+                .css("display","inline")
+                .css("margin","0px")
+                .css("padding","0px")
+                .css("padding-left","10px");
             $(".navlink").click(function(){
                 var des = $(this).css("text-decoration");
                 var navid = "#"+$(this).attr("navlink")+"_navlink";
@@ -36,17 +43,35 @@
                     $(navid).css("display","none");
                 }
             });
-        </script>   
 
-        <hr/>
-        <button id="changecss">更改导航样式</button>
-        <script>
-            $("#changecss").click(function(){
+            $.get("/state",function(data){
+                var state = eval('('+data+')');
+                
+                        $(".product_navlink").css("text-decoration","none"!== state.product_navlink_css?"none":"line-through")
+                        $(".zhengshu_navlink").css("text-decoration","none"!==state.zhengshu_navlink_css?"none":"line-through")
+                        $(".photo_navlink").css("text-decoration","none"!==state.photo_navlink_css?"none":"line-through")
+                        $(".doc_navlink").css("text-decoration","none"!==state.doc_navlink_css?"none":"line-through")
+                        $(".job_navlink").css("text-decoration","none"!==state.job_navlink_css?"none":"line-through")
+                        $(".contact_navlink").css("text-decoration","none"!==state.contact_navlink_css?"none":"line-through")
+                        $(".about_navlink").css("text-decoration","none"!==state.about_navlink_css?"none":"line-through")
+                        $(".msg_navlink").css("text-decoration","none"!==state.msg_navlink_css?"none":"line-through")
+            });
+
+            $("#navcss1").click(function(){
                 $.get("/navcss1.css",function(data){
                     $("#navcss").html(data);
+                    $("#navcss").attr("cssname","navcss1.css");
                 });
+                
             });
-        </script>
+            $("#navcss2").click(function(){
+                $.get("/navcss2.css",function(data){
+                    $("#navcss").html(data);
+                    $("#navcss").attr("cssname","navcss2.css");
+                });
+                
+            });
+        </script>   
     </div>
     
     <div id="modules">
@@ -180,13 +205,13 @@
     $(function(){
         $('#update_bg_form').ajaxForm(function(data){
             if("success" === data){
-                $("body").css("background-image","url(/bg?"+new Date().getTime()+")");
+                $("body").css("background","url(/bg?"+new Date().getTime()+")");
             }else{
                 alert("logo errer!");
             }
         });
         $('#show-bg').click(function(){
-            $("body").css("background-image","url(/bg?"+new Date().getTime()+")");});
+            $("body").css("background","url(/bg?"+new Date().getTime()+")");});
         $('#bg-gundong').click(function(){
             $('body').css('background-attachment', 'scroll')
         });
@@ -226,7 +251,7 @@
     $(function(){
         $('#update_banner_form').ajaxForm(function(data){
             if("success" === data){
-                $("#header").css("background-image","url(/banner?"+new Date().getTime()+")");
+                $("#header").css("background","url(/banner?"+new Date().getTime()+")");
             }else{
                 alert("banner errer!");
             }
@@ -312,7 +337,16 @@
         logosize:logosize,
         navtop:navtop,
         navleft:navleft,
-        bgcss:bgcss
+        bgcss:bgcss,
+        product_navlink_css:$("#product_navlink").css("display"),
+        zhengshu_navlink_css:$("#product_navlink").css("display"),
+        photo_navlink_css:$("#photo_navlink").css("display"),
+        doc_navlink_css:$("#doc_navlink").css("display"),
+        job_navlink_css:$("#job_navlink").css("display"),
+        contact_navlink_css:$("#contact_navlink").css("display"),
+        about_navlink_css:$("#about_navlink").css("display"),
+        msg_navlink_css:$("#msg_navlink").css("display"),
+        navcss:$("#navcss").attr("cssname")
         },function(data){
         alert(data);
     }); 
@@ -321,5 +355,7 @@
 $('#savestate').click(function(){
     savestate();
 });
+
+
 
     </script>

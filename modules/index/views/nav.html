@@ -9,4 +9,21 @@
    <li id="about_navlink"><a href="/about">关于我们</a></li>
    <li id="msg_navlink"><a href="/msg">留言</a></li>
 </ul>
+<script>
+    $.get("/state",function(data){
+        var state = eval('('+data+')');
+        $("#product_navlink").css("display",state.product_navlink_css)
+        $("#zhengshu_navlink").css("display",state.zhengshu_navlink_css)
+        $("#photo_navlink").css("display",state.photo_navlink_css)
+        $("#doc_navlink").css("display",state.doc_navlink_css)
+        $("#job_navlink").css("display",state.job_navlink_css)
+        $("#contact_navlink").css("display",state.contact_navlink_css)
+        $("#about_navlink").css("display",state.about_navlink_css)
+        $("#msg_navlink").css("display",state.msg_navlink_css)  
+          
+        $.get("/"+state.navcss,function(data){
+          $("#navcss").html(data);
+        });
+    });
 
+</script>
