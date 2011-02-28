@@ -27,7 +27,7 @@
             <div id='container' class="ui-widget ui-widget-content  ui-corner-all">
                 <div id='header' class="ui-widget ui-widget-content">
                     <img id='logo' src="/logo" />
-                    <div id='nav'></div>
+                    <div id='nav'></div><div id="navcss"></div>
                 </div>
                 <div id="content">
                   <%-body%>
@@ -52,5 +52,6 @@
         $("body").attr("style",state.bgcss);
         $("body").css("background-image","url(/bg?"+new Date().getTime()+")");
         $("#header").attr("style",state.headercss);
+        $("#nav").css("left",state.navleft).css("top",state.navtop);
     });
 </script>

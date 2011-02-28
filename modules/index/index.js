@@ -8,9 +8,9 @@ var form = new FormData();
 var Model = require('mongo-model').Model;
 var ObjectID = require('mongo-model').ObjectID;
 var SiteState = new Model("sitestate");
-var Logo = new Model("logo","/home/lelandtseng/tmp");
-var BG = new Model("bg","/home/lelandtseng/tmp");
-var banner = new Model("banner","/home/lelandtseng/tmp");
+var Logo = new Model("logo","/home/leland/tmp");
+var BG = new Model("bg","/home/leland/tmp");
+var banner = new Model("banner","/home/leland/tmp");
 var seo = new Model("seo");
 
 function username(req,res,next){
@@ -110,7 +110,7 @@ app.post("/logo/update",yz,form.build(),function(req,res){
 app.get("/logo",username,function(req,res){
     Logo.get(req.username,function(data){
         try{           
-            var path = '/home/lelandtseng/tmp/'+data.data.path; 
+            var path = '/home/leland/tmp/'+data.data.path; 
             console.log(path);
             res.sendfile(path);
         }catch(e){
@@ -139,7 +139,7 @@ app.post("/bg/update",yz,form.build(),function(req,res){
 app.get("/bg",username,function(req,res){
     BG.get(req.username,function(data){
         try{           
-            var path = '/home/lelandtseng/tmp/'+data.data.path; 
+            var path = '/home/leland/tmp/'+data.data.path; 
             //console.log(path);
             res.sendfile(path);
         }catch(e){
@@ -168,7 +168,7 @@ app.post("/banner/update",yz,form.build(),function(req,res){
 app.get("/banner",username,function(req,res){
     banner.get(req.username,function(data){
         try{           
-            var path = '/home/lelandtseng/tmp/'+data.data.path; 
+            var path = '/home/leland/tmp/'+data.data.path; 
             //console.log(path);
             res.sendfile(path);
         }catch(e){

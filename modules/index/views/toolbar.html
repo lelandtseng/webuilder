@@ -5,10 +5,50 @@
         <li><a href='#layout'>布局</a></li>
         <li><a href='#bg'>背景</a></li>
         <li><a href='#btl'>标题栏</a></li>
+        <li><a href='#navc'>导航栏</a></li>
         <li><a href='#seo'>SEO搜索优化</a></li>
         <li><a href='#logoco'>标识LOGO</a></li>
         <li><a href='#modules'>系统模块</a></li>
     </ul>
+    <div id="navc">
+    
+        <ul>
+           <li navlink="product" class="navlink product_navlink">产品</li>
+           <li navlink="zhengshu" class="navlink zhengshu_navlink">证书</li>
+           <li navlink="photo" class="navlink photo_navlink">相册</li>
+           <li navlink="doc" class="navlink doc_navlink">文章</li>
+           <li navlink="job" class="navlink job_navlink">招聘</li>
+           <li navlink="contact" class="navlink contact_navlink">联系方式</li>
+           <li navlink="about" class="navlink about_navlink">关于我们</li>
+           <li navlink="msg" class="navlink msg_navlink">留言</li>
+        </ul>
+
+        <script>    
+            $(".navlink").click(function(){
+                var des = $(this).css("text-decoration");
+                var navid = "#"+$(this).attr("navlink")+"_navlink";
+                
+                if("line-through" === des){
+                    $(this).css("text-decoration","none");
+                    $(navid).css("display","block");
+                }else{
+                    $(this).css("text-decoration","line-through");
+                    $(navid).css("display","none");
+                }
+            });
+        </script>   
+
+        <hr/>
+        <button id="changecss">更改导航样式</button>
+        <script>
+            $("#changecss").click(function(){
+                $.get("/navcss1.css",function(data){
+                    $("#navcss").html(data);
+                });
+            });
+        </script>
+    </div>
+    
     <div id="modules">
         <ul>
             <li modulelink="/gonggao">公告模块</li>
