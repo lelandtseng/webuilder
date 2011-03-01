@@ -350,12 +350,18 @@
         },function(data){
         alert(data);
     }); 
+    
 }
 
-$('#savestate').click(function(){
-    savestate();
-});
+    $('#savestate').click(function(){
+        savestate();
+    });
 
-
-
-    </script>
+    $('#left,#center,#right').sortable({
+        connectWith: ".connectedSortable"
+    }).disableSelection();
+    
+    $('#left,#center,#right').sortable({
+        connectWith: ".connectedSortable"
+    }).disableSelection();
+</script>
