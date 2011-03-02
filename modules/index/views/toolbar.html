@@ -76,21 +76,47 @@
     
     <div id="modules">
         <ul>
-            <li modulelink="/gonggao">公告模块</li>
-            <li modulelink="/link">友情链接模块</li>
-            <li modulelink="/contact">联系方式模块</li>
-            <li modulelink="/product/newproduct">最新产品展示模块</li>
-            <li modulelink="/product/bestproduct">推荐产品展示模块</li>
-            <li modulelink="/producttype">产品类别模块</li>
-            <li modulelink="/job">招聘模块</li>
-            <li moudlelink="/about">关于我们模块</li>
-            <li modulelink="/msg">留言模块</li>
-            <li modulelink="/doctype">文章类别模块</li>
-            <li modulelink="/doc">文章模块</li>
-            <li modulelink="/photo">相册模块</li>
-            <li modulelink="/phototype">相册类别模块</li>
+            <li modulename="gonggao">公告模块</li>
+            <li modulename="link">友情链接模块</li>
+            <li modulename="contact">联系方式模块</li>
+            <li modulename="newproduct">最新产品展示模块</li>
+            <li modulename="bestproduct">推荐产品展示模块</li>
+            <li modulename="producttype">产品类别模块</li>
+            <li modulename="job">招聘模块</li>
+            <li modulename="about">关于我们模块</li>
+            <li modulename="msg">留言模块</li>
+            <li modulename="doctype">文章类别模块</li>
+            <li modulename="doc">文章模块</li>
+            <li modulename="photo">相册模块</li>
+            <li modulename="phototype">相册类别模块</li>
         </ul>
     </div>
+    
+    <script>
+    
+        // 判断添加到left center right 那个区域里面
+        function isLCR(){
+            var ln = $("#left *").length;
+            var cn = $("#center *").length;
+            var rn = $("#right *").length;
+            
+            if(ln<=cn && cn<=rn) return "#left";
+            if(cn<=rn) return "#center";
+            var b = ("none" === $("#right").css("display"));
+            return b ? "#left" : "#right";
+            
+        }
+    
+        $("#modules li").click(function(){
+            var lcrname = isLCR();
+            var modulename = $(this).attr("modulename");
+            var moduleurl = "/modules/"+modulename;
+            $.get(moduleurl,function(data){
+                $(lcrname).append(data);
+            });
+        });
+    </script>
+    
     <div id='logoco'>
             <form method='post' enctype="multipart/form-data" id="update_logo_form" action='/logo/update'>
                 <input type='file' name='data' /><input type='submit' />
@@ -303,13 +329,7 @@
     })
     </script>
     <script>
-    $("li[modulelink]").click(function(){
-            var url = $(this).attr('modulelink');
-            $.get(url,function(data){
-                $("#center").html(data);
-            });
-    });
-        
+       
     $('#toolbar').tabs({
 	        ajaxOptions:{}
     });

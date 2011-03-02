@@ -20,7 +20,7 @@ app.post('/login',function(req, res){
     User.find({loginname:loginname,password:password},{},function(users){
         if(users[0]){
             req.session.loginuser = users[0];
-            res.redirect('/product');
+            res.redirect('/');
         }else{
             res.redirect('/login');
         }
