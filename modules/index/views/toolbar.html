@@ -99,17 +99,22 @@
             var ln = $("#left *").length;
             var cn = $("#center *").length;
             var rn = $("#right *").length;
-            
-            if(ln<=cn && cn<=rn) return "#left";
-            if(cn<=rn) return "#center";
             var b = ("none" === $("#right").css("display"));
-            return b ? "#left" : "#right";
+            if(b){
+                if(ln<=cn) return "#left";
+                return "#center";
+            }
+            if(ln<=cn && cn<=rn) return "#left";
+            if(cn<=rn) return "#center";            
+            
+            return "#right";
             
         }
     
         $("#modules li").click(function(){
             var lcrname = isLCR();
             var modulename = $(this).attr("modulename");
+            
             var moduleurl = "/modules/"+modulename;
             $.get(moduleurl,function(data){
                 $(lcrname).append(data);
@@ -177,24 +182,26 @@
 
         var layout = $(this).attr('layout');
         var num = layout.split(':');	
-        if(num.length==2){$('#right').hide();
-        var bb = num[0]+'%';
-        var bb2 = num[1]+'%'
-        $('#left').css('width',bb);
-        $('#center').css('width',bb2);
-        }
-        else{
-        var bb = num[0]+'%'
-        var bb2 = num[1]+'%'
-        var bb3 = num[2]+'%'
-        $('#left').css('width',bb);
-        $('#center').css('width',bb2);
-        $('#right').show();
-        $('#right').css('width',bb3);
+        if(num.length==2){
+            $("#right *").clone().prependTo("#center");  
+            $("#right").empty();
+            $('#right').hide();
+            var bb = num[0]+'%';
+            var bb2 = num[1]+'%'
+            $('#left').css('width',bb);
+            $('#center').css('width',bb2);
+        }else{
+            var bb = num[0]+'%'
+            var bb2 = num[1]+'%'
+            var bb3 = num[2]+'%'
+            $('#left').css('width',bb);
+            $('#center').css('width',bb2);
+            $('#right').show();
+            $('#right').css('width',bb3);
         }
 
         $('#left,#centent,#right').sortable({
-        connectWith: ".connectedSortable"
+            connectWith: ".connectedSortable"
         }).disableSelection();
         
     });
@@ -384,4 +391,6 @@
     $('#left,#center,#right').sortable({
         connectWith: ".connectedSortable"
     }).disableSelection();
+
+    
 </script>
