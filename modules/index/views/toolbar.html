@@ -112,13 +112,25 @@
         }
     
         $("#modules li").click(function(){
-            var lcrname = isLCR();
-            var modulename = $(this).attr("modulename");
+            var des = $(this).css("text-decoration");
+                
+            if("line-through" === des){
+                $(this).css("text-decoration","none");
+                var modulename = $(this).attr("modulename");
+                $("#"+modulename+"_module").remove();
+                
+            }else{
+                $(this).css("text-decoration","line-through");            
+                var lcrname = isLCR();
+                var modulename = $(this).attr("modulename");
+                
+                var moduleurl = "/modules/"+modulename;
+                $.get(moduleurl,function(data){
+                    $(lcrname).append(data);
+                });
+            }
             
-            var moduleurl = "/modules/"+modulename;
-            $.get(moduleurl,function(data){
-                $(lcrname).append(data);
-            });
+
         });
     </script>
     
