@@ -40,7 +40,7 @@ app.get('/' ,function(req, res){
     }, function(data){
          res.render('index.html',{
             logined:req.session.loginuser?req.session.loginuser:false,
-            layout:!req.xhr,
+            layout:false,
             links:data
         });
     });

@@ -1,8 +1,12 @@
-<div id="contactmodule">
-<%= contact.content?contact.content:"" %>
+<div id="contact_module" style="margin:5px;position:relative" class="ui-widget-content ui-corner-all">
+<div class="ui-widget-header" >
+<span>联系方式</span>
 <% if(logined){ %>
 <a class="open_edit_contact_dialog_link" href="#" url="/contact/<%= contact._id %>/edit">更新</a>
 <% } %>
+<div>
+<%= contact.content?contact.content:"" %>
+
 </div>
 
 <script>

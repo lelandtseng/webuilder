@@ -17,7 +17,7 @@
     $("#edit_contact_form").ajaxForm(function(data){
            if("success" == data){
             $.get("/contact?"+new Date().getTime(),function(data){
-                $("#content").html(data);
+                $("#contact_module").replaceWith(data);
                 $("#dialog").dialog('close');
             });    
            }else{

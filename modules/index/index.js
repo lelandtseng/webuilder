@@ -201,6 +201,18 @@ app.get("/modules/:name",function(req,res){
         case "gonggao" : 
             res.redirect("/gonggao");
         break;
+        case "link" :
+            res.redirect("/link");
+            break;
+        case "contact" :
+            res.redirect("/contact");
+            break;
+        case "about" :
+            res.redirect("/about");
+            break;
+        case "producttype" :
+            res.redirect("/producttype");
+            break;
         default:
         res.render(name+".html",{layout:false});
     }

@@ -1,15 +1,15 @@
-<div id="navbar">
-    <a href="/">首页</a>
-     -> 友情链接
-
+<div id="link_module" style="margin:5px;position:relative" class="ui-widget-content ui-corner-all">
+<div class="ui-widget-header" >
+<span>友情链接</span>
+<% if(logined){ %>
+<span id="open_add_link_dialog_link" >添加</span>
+<% } %>
 </div>
-<div id="linkmodule">
 <ul>
 	<% for(var o in links){ %>
 		<li>
 		<a href="/link/<%= links[o]._id %>">
 		<%= links[o].name %>
-		<img src="/link/img/<%=links[o].smallimg.path%>?<%=new Date().getTime()%>" width='120' height='120'/>
 		</a>
 		    <% if(logined){ %>
 		    <a class="open_edit_link_dialog_link" href="#" url="/link/<%= links[o]._id %>/edit">更新</a>  
@@ -21,9 +21,6 @@
 		</li>
 	<% } %>
 </ul>
-<% if(logined){ %>
-<a href='#' id="open_add_link_dialog_link" >添加</a>
-<% } %>
 </div>
 
 <script>
@@ -47,7 +44,7 @@
     $(".del_link").ajaxForm(function(data){
           if("success" == data){
             $.get("/link",function(data){
-                $("#content").html(data);
+                $("#link_module").replaceWith(data);
                 $("#dialog").dialog('close');
             });
           }

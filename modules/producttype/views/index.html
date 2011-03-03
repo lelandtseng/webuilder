@@ -1,8 +1,15 @@
+<div id="producttype_module" style="margin:5px;position:relative" class="ui-widget-content ui-corner-all">
+<div class="ui-widget-header" >
+<span>产品类别</span>
+<% if(logined){ %>
+<span id="open_add_producttype_dialog_link" >添加</span>
+<% } %>
+</div>
 <ul>
 	<% for(var o in types){ %>
 		<li><a href="/product/type/<%=types[o].name%>"><%= types[o].name %></a>
-		    <% if(editable){ %> 
-		    <form method='post' action='/producttype/<%= types[o]._id %>'>
+		    <% if(logined){ %> 
+		    <form method='post' class="del_link" action='/producttype/<%= types[o]._id %>'>
 		        <input type='hidden' name='_method' value='delete' />
 		        <input type='submit' value='删除' />
 		    </form>
@@ -10,4 +17,32 @@
 		</li>
 	<% } %>
 </ul>
+</div>
+<script>
+    
+    $("#open_add_producttype_dialog_link").click(function(){
+        $.get("/producttype/new",function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
+    
+    $(".open_edit_producttype_dialog_link").click(function(){
+        var linkurl = $(this).attr('url');
+        $.get(linkurl,function(data){
+           $("#dialog").html(data);
+           $("#dialog").dialog('open');
+        });
+    });
 
+
+    $(".del_link").ajaxForm(function(data){
+          if("success" == data){
+            $.get("/producttype",function(data){
+                $("#producttype_module").replaceWith(data);
+                $("#dialog").dialog('close');
+            });
+          }
+    });
+    
+</script>

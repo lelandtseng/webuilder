@@ -35,14 +35,15 @@ app.get('/' , function(req, res){
     ProductType.find({}, {}, function(data){
          res.render('index.html',{
             layout:false,
-            types:data,editable:req.session.loginuser?true:false
+            types:data,
+            logined:req.session.loginuser?true:false
         });
     });
 });
 
 // 打开添加产品类别的页面
 app.get('/new',yz2, function(req, res){
-    res.render('new.html');
+    res.render('new.html',{layout:false});
 });
 
 // 添加产品类别

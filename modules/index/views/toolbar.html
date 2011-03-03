@@ -195,17 +195,17 @@
         var layout = $(this).attr('layout');
         var num = layout.split(':');	
         if(num.length==2){
-            $("#right *").clone().prependTo("#center");  
+            $("#right > div").clone().prependTo("#center");  
             $("#right").empty();
             $('#right').hide();
-            var bb = num[0]+'%';
-            var bb2 = num[1]+'%'
+            var bb = "198px";
+            var bb2 = "598px";
             $('#left').css('width',bb);
             $('#center').css('width',bb2);
         }else{
-            var bb = num[0]+'%'
-            var bb2 = num[1]+'%'
-            var bb3 = num[2]+'%'
+            var bb = "198px"
+            var bb2 = "398px"
+            var bb3 = "198px"
             $('#left').css('width',bb);
             $('#center').css('width',bb2);
             $('#right').show();

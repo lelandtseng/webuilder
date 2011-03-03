@@ -1,8 +1,15 @@
-<div id="aboutmodule">
-<%= about.content?about.content:"" %>
+<div id="about_module" style="margin:5px;position:relative" class="ui-widget-content ui-corner-all">
+<div class="ui-widget-header" >
+<span>联系方式</span>
+
 <% if(logined){ %>
+<span>
 <a class="open_edit_about_dialog_link" href="#" url="/about/<%= about._id %>/edit">更新</a>
+</span>
 <% } %>
+</div>
+<%= about.content?about.content:"" %>
+
 </div>
 
 <script>
