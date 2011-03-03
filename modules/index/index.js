@@ -196,6 +196,15 @@ app.post("/seo/update",yz,form.build(),function(req,res){
 // modules
 app.get("/modules/:name",function(req,res){
     var name = req.params.name;
-    res.render(name+".html",{layout:false});
+    
+    switch(name){
+        case "gonggao" : 
+            req.xhr = true;
+            res.redirect("/gonggao");
+        break;
+        default:
+        res.render(name+".html",{layout:false});
+    }
+    //res.redirect("/gonggao");
 });
 
