@@ -1,9 +1,9 @@
-<div id="gonggao_module" style="margin:5px;" class="ui-widget-content ui-corner-all">
+<div id="gonggao_module" style="margin:5px;position:relative" class="ui-widget-content ui-corner-all">
+    <% if(logined){ %>
+    <span style="right:0;top:0;position:absolute;index-z:100;" class="open_edit_gonggao_dialog_link" url="/gonggao/<%= gonggao._id %>/edit">更新</span>
+    <% } %>
     <div class="ui-widget-header ui-corner-all" >
     <span>公告</span>
-    <% if(logined){ %>
-    <span class="open_edit_gonggao_dialog_link" url="/gonggao/<%= gonggao._id %>/edit">更新</span>
-    <% } %>
     </div>
     <div>
     <%= gonggao.content?gonggao.content:"" %>
