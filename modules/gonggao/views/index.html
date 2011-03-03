@@ -1,8 +1,15 @@
 <div id="gonggao_module" style="margin:5px;" class="ui-widget-content ui-corner-all">
-    <div><%= gonggao.content?gonggao.content:"" %></div>
+    <div class="ui-widget-header ui-corner-all" >
+    <span>公告</span>
     <% if(logined){ %>
     <span class="open_edit_gonggao_dialog_link" url="/gonggao/<%= gonggao._id %>/edit">更新</span>
     <% } %>
+    </div>
+    <div>
+    <%= gonggao.content?gonggao.content:"" %>
+
+    </div>
+
 </div>
 <script>
     $(".open_edit_gonggao_dialog_link").click(function(){
