@@ -1,10 +1,9 @@
-<div id="gonggaomodule">
-<%= gonggao.content?gonggao.content:"" %>
-<% if(logined){ %>
-<a class="open_edit_gonggao_dialog_link" href="#" url="/gonggao/<%= gonggao._id %>/edit">更新</a>
-<% } %>
+<div id="gonggao_module" style="margin:5px;" class="ui-widget-content ui-corner-all">
+    <div><%= gonggao.content?gonggao.content:"" %></div>
+    <% if(logined){ %>
+    <span class="open_edit_gonggao_dialog_link" url="/gonggao/<%= gonggao._id %>/edit">更新</span>
+    <% } %>
 </div>
-
 <script>
     $(".open_edit_gonggao_dialog_link").click(function(){
         var linkurl = $(this).attr('url');

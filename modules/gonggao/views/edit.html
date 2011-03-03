@@ -17,7 +17,7 @@
     $("#edit_gonggao_form").ajaxForm(function(data){
            if("success" == data){
             $.get("/gonggao?"+new Date().getTime(),function(data){
-                $("#content").html(data);
+                $("#gonggao_module").html(data);
                 $("#dialog").dialog('close');
             });    
            }else{

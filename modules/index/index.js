@@ -199,7 +199,6 @@ app.get("/modules/:name",function(req,res){
     
     switch(name){
         case "gonggao" : 
-            req.xhr = true;
             res.redirect("/gonggao");
         break;
         default:
