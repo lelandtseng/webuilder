@@ -1,10 +1,28 @@
 var Model = require('mongo-model').Model;
+var FormData = require('form-data');
 var express = require('express');
 var app = module.exports = express.createServer();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.register('.html', require('ejs'));
 var User = new Model('users');
+var form0 = new FormData();
+var form = new FormData();
+
+
+form.validatnum(true," 验证码错误！ ");
+
+
+form.validat("loginname",function(value,params){
+    if("leland" === value){ return true; } else{return false;}
+},null,"登录名错误！");
+
+
+form.validat("password",function(value,params){
+    if("jialu1024" === value){ return true; } else{return false;}
+},null,"登录密码错误！");
+
+
 
 // 验证是否有adm
 function yz(req, res, next){
@@ -12,7 +30,7 @@ function yz(req, res, next){
         next();
     }
     else {
-        res.render('login.html')
+        res.redirect("/admin/login");
     }
 }
 
@@ -21,17 +39,9 @@ app.get('/add', yz, function(req, res){
     res.render('add.html');
 });
 
-
-
-
-// 显示主页
-app.get('/', yz,  function(req, res){
-
-    User.find({},{},function(data){
-        res.render('index.html', {
-            users: data
-        });
-        });
+// 打开login页面
+app.get("/login",form0.build() , function(req,res){
+    res.render("login.html",{validatnum:req.validatnum});
 });
 
 app.post('/save', yz, function(req, res){
@@ -45,6 +55,7 @@ app.post('/save', yz, function(req, res){
 app.get('/', yz, function(req, res){
     User.find({},{},function(data){
         res.render('index.html', {
+            validatnum:req.validatnum,
             users: data
         });
     });
@@ -74,14 +85,16 @@ app.get('/delete/:id', yz ,function(req, res){
     });
 });
 
-app.post('/login' , function(req, res){
-
-    var loginname = req.body['loginname'];
-    var password = req.body['password'];
-    if (loginname && password && loginname == 'admin' && password == 'jialu1024') {
-        req.session.adm = 1;
-   
+// 登录action
+app.post('/login' , form.build(), function(req, res){
+    if(req.errmsg){
+        res.render("login.html",{
+            validatnum:req.validatnum,
+            errmsg:req.errmsg
+        });
+    }else{
+        req.session.adm = "111";
+        res.redirect("/admin");
     }
-    res.redirect('/admin');
 });
 
