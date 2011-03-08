@@ -1,0 +1,19 @@
+<form id="update_pwd_form" action="/updatepwd" method="post"> 
+    <label for="updatepwd_oldpwd">旧密码</label>
+    <input id="updatepwd_oldpwd" type="password" name="oldpwd" />
+    <label for="updatepwd_password">新密码</label>
+    <input id="updatepwd_password" type="password" name="password" />
+    <label for="updatepwd_confirm">确认密码</label>
+    <input id="updatepwd_confirm" type="password" name="confirm" />
+    <input type="submit" value="更新密码" />
+</form>
+<script>
+     $("#update_pwd_form").ajaxForm(function(data){
+        if("success" === data){
+            $("#dialog").dialog("close");
+            alert("密码更改成功！");
+        }else{
+            $("#dialog").html(data);
+        }
+     });
+</script>

@@ -1,5 +1,14 @@
 <div id='toolbar'>
-<button id="savestate">保存网站状态</button>
+<button id="savestate">保存网站状态</button><button id="open_updatepwd_page_button">更改密码</button>
+<script>
+    $("#savestate").button(); $("#open_updatepwd_page_button").button();
+    $("#open_updatepwd_page_button").click(function(){
+        $.get("/updatepwd",function(data){
+            $("#dialog").html(data);
+            $("#dialog").dialog("open");
+        });
+    });
+</script>
     <ul>
         <li><a href='#_theme'>色调</a></li>
         <li><a href='#layout'>布局</a></li>

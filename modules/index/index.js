@@ -12,6 +12,7 @@ var Logo = new Model("logo","/home/lelandtseng/tmp");
 var BG = new Model("bg","/home/lelandtseng/tmp");
 var banner = new Model("banner","/home/lelandtseng/tmp");
 var seo = new Model("seo");
+var user = new Model("users");
 
 function username(req,res,next){
     req.username = "abc";
@@ -218,4 +219,31 @@ app.get("/modules/:name",function(req,res){
     }
     //res.redirect("/gonggao");
 });
+
+// show update password page.
+app.get("/updatepwd",function(req,res){
+    res.render("updatepwd.html",{layout:false});
+});
+
+function yz2(req,res,next){
+    req.session.loginuser?next():res.redirect("/login");
+}
+
+// update user password!
+app.post("/updatepwd",yz2,form.build(),function(req,res){
+    var lu = req.session.loginuser;
+    
+    if(lu.password === req.formdata.oldpwd && req.formdata.password === req.formdata.confirm){
+        lu.password = req.formdata.password;
+        user.update(lu._id,lu,function(){
+            res.send("success");
+        });
+    }else{
+        res.redirect("/updatepwd");
+    }
+});
+
+
+
+
 
